@@ -5,7 +5,8 @@ import {
   Button,
   TextInput,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  CheckBox
 } from 'react-native'
 
 class Register extends Component {
@@ -18,6 +19,10 @@ class Register extends Component {
           <TextInput style={style.textInput} placeholder='Nomor Ponsel' underlineColorAndroid={'transparent'} color="black" ></TextInput>
           <TextInput style={style.textInput} placeholder='Email' underlineColorAndroid={'transparent'} color='black' ></TextInput>
           <TextInput style={style.textInput} placeholder='Kode Promosi (Optional)' underlineColorAndroid={'transparent'} color="black" ></TextInput>
+          <View style={style.checkboxContainer}>
+            <CheckBox style={style.checkbox}></CheckBox>
+            <Text style={style.textCheckbox}>Saya setuju dengan kesepakatan dan persetujuan aplikasi</Text>
+          </View>
           <TouchableOpacity style={style.button}>
             <Text style={style.buttonText}>BERIKUTNYA</Text>
           </TouchableOpacity>
@@ -53,7 +58,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 290,
+    marginTop: 240,
     backgroundColor: '#80DADA',
     borderRadius: 25,
   },
@@ -61,5 +66,17 @@ const style = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#FFF',
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  textCheckbox: {
+    marginTop: 10,
+    fontSize: 15,
+    color: '#AAAAAA'
   }
 })
