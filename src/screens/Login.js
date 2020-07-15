@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import bg from '../assets/img/bg.png';
 
 const deviceWidth = Dimensions.get('screen').width;
@@ -17,10 +17,19 @@ export default class Signin extends Component {
       isLoaded: false
     }
   }
+<<<<<<< HEAD
 
   register = () => {
     this.props.navigation.navigate('register')
   }
+=======
+  register = () => {
+    this.props.navigation.navigate('register')
+  }
+  login = () => {
+    this.props.navigation.navigate('home')
+  }
+>>>>>>> origin/developp
   render() {
     return (
       <>
@@ -30,7 +39,7 @@ export default class Signin extends Component {
           <View style={loginStyle.accent1} />
           <View style={loginStyle.accent2}>
             <View style={loginStyle.titleWrapper}>
-              <Text style={loginStyle.title}>ANTOO</Text>
+              <Text style={loginStyle.title}>Antoo.</Text>
             </View>
             <View style={loginStyle.formWrapper}>
               <View style={loginStyle.inputWrapper}>
@@ -43,7 +52,7 @@ export default class Signin extends Component {
                   placeholderTextColor='white'
                 />
               </View>
-              <TouchableOpacity style={loginStyle.btnSignin}>
+              <TouchableOpacity style={loginStyle.btnSignin} onPress={this.login}>
                 <Text style={loginStyle.btnText}>SIGN IN</Text>
               </TouchableOpacity>
               <View style={loginStyle.divider}>
@@ -51,8 +60,13 @@ export default class Signin extends Component {
                 <Text style={loginStyle.textDivider}>ATAU</Text>
                 <View style={loginStyle.line}/>
               </View>
+<<<<<<< HEAD
               <TouchableOpacity style={loginStyle.btnJoin}>
                 <Text style={loginStyle.btnText} onPress={this.register}>JOIN NOW</Text>
+=======
+              <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
+                <Text style={loginStyle.btnText}>JOIN NOW</Text>
+>>>>>>> origin/developp
               </TouchableOpacity>
               <TouchableOpacity style={loginStyle.btnHelp}>
                 <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
