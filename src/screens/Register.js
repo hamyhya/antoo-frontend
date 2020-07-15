@@ -10,6 +10,9 @@ import {
 } from 'react-native'
 
 class Register extends Component {
+  home = () => {
+    this.props.navigation.navigate('home')
+  }
   render(){
     return(
       <>
@@ -23,7 +26,7 @@ class Register extends Component {
             <CheckBox style={style.checkbox}></CheckBox>
             <Text style={style.textCheckbox}>Saya setuju dengan kesepakatan dan persetujuan aplikasi</Text>
           </View>
-          <TouchableOpacity style={style.button}>
+          <TouchableOpacity style={style.button} onPress={this.home}>
             <Text style={style.buttonText}>BERIKUTNYA</Text>
           </TouchableOpacity>
         </View>
@@ -58,7 +61,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 240,
+    marginTop: 100,
     backgroundColor: '#80DADA',
     borderRadius: 25,
   },
