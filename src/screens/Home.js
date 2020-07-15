@@ -26,6 +26,15 @@ export default class Home extends Component {
   topUp = () => {
     this.props.navigation.navigate('top-up')
   }
+  transfer = () => {
+    this.props.navigation.navigate('transfer')
+  }
+  promo = () => {
+    this.props.navigation.navigate('promo-all')
+  }
+  listrik = () => {
+    this.props.navigation.navigate('listrik')
+  }
   render() {
     const data = [
       {
@@ -61,11 +70,11 @@ export default class Home extends Component {
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Top Up</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper}>
+              <TouchableOpacity style={style.iconWrapper} onPress={this.transfer}>
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Transfer</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper}>
+              <TouchableOpacity style={style.iconWrapper} onPress={this.listrik}>
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Listrik</Text>
               </TouchableOpacity>
@@ -73,7 +82,7 @@ export default class Home extends Component {
             <View style={style.promo}>
               <View style={style.headerPromo}>
                 <Text style={style.headerPromoTitle}>Info dan Promo Spesial</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.promo}>
                   <Text style={style.headerPromoTitleBtn}>Lihat Semua</Text>
                 </TouchableOpacity>
               </View>

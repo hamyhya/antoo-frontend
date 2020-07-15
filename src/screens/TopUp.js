@@ -66,7 +66,7 @@ export default class TopUp extends Component {
               </View>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp}>
-                  <Text style={style.btnTopUpText}>Top Up</Text>
+                  <Text style={style.btnTopUpText}>TOP UP</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>

@@ -4,7 +4,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import Home from '../screens/Home'
-// import Profile from '../screens/Profile'
+import Profile from '../screens/Profile'
+import Promo from '../screens/Promo'
 
 const BottomTab = createBottomTabNavigator()
 
@@ -36,7 +37,7 @@ export default class Tab extends Component {
               <Icon name="history" color={color} size={size} />
             ),
           }}
-          component={Home}
+          component={Promo}
           name="promo"
         />
         <BottomTab.Screen
@@ -56,7 +57,7 @@ export default class Tab extends Component {
               <Icon name="user" solid color={color} size={size} />
             ),
           }}
-          component={Home}
+          component={Profile}
           name="profile"
         />
       </BottomTab.Navigator>
