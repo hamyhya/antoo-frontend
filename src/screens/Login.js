@@ -64,7 +64,7 @@ export default class Signin extends Component {
 const loginStyle = StyleSheet.create({
   fill: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
   },
   accent1: {
     width: deviceWidth,
