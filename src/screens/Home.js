@@ -95,7 +95,7 @@ export default class Home extends Component {
                     title={item.title}
                   />
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 />
               </View>
             </View>

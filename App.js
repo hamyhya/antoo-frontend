@@ -10,7 +10,11 @@ import TopUp from './src/screens/TopUp'
 import EditProfile from './src/screens/EditProfile'
 import Transfer from './src/screens/Transfer'
 import Promo from './src/screens/Promo'
-import PLN from './src/screens/PLN';
+import PLN from './src/screens/PLN'
+import LoginPin from './src/screens/LoginPin'
+import OTP from './src/screens/OTP'
+import CreatePin from './src/screens/CreatePin'
+import CreatePinConfirmation from './src/screens/CreatePinConfirmation'
 
 const Stack = createStackNavigator()
 
@@ -72,6 +76,42 @@ export default class App extends Component {
               name='listrik'
               options={{
                 title: 'LISTRIK',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={LoginPin}
+              name='login-pin'
+              options={{
+                title: 'SIGN IN',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={OTP}
+              name='otp'
+              options={{
+                title: 'VERIFIKASI EMAIL',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={CreatePin}
+              name='create-pin'
+              options={{
+                title: 'BUAT PIN',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={CreatePinConfirmation}
+              name='create-pin-confirmation'
+              options={{
+                title: 'VERIFIKASI PIN',
                 headerTintColor: '#fff',
                 headerStyle: {backgroundColor: '#583A8E'}
               }}

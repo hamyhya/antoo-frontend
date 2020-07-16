@@ -21,7 +21,7 @@ export default class Signin extends Component {
     this.props.navigation.navigate('register')
   }
   login = () => {
-    this.props.navigation.navigate('mainmenu')
+    this.props.navigation.navigate('login-pin')
   }
   render() {
     return (

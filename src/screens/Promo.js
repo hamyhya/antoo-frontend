@@ -63,7 +63,7 @@ export default class Promo extends Component {
                     title={item.title}
                   />
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 />
             </View>
           </View>
@@ -119,7 +119,7 @@ const style = StyleSheet.create({
   searchInput: {
     width: 200,
     height: 40,
-    backgroundColor: '#4C2B86',
+    backgroundColor: '#8771AE',
     borderRadius: 10,
     padding: 10,
     color: 'white'
@@ -127,7 +127,7 @@ const style = StyleSheet.create({
   searchBtn: {
     width: 70,
     height: 40,
-    backgroundColor: '#4C2B86',
+    backgroundColor: '#8771AE',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
