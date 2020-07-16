@@ -22,6 +22,10 @@ class Profile extends Component {
     this.props.navigation.navigate('editProfile')
   }
 
+  logout = () => {
+    this.props.navigation.navigate('login')
+  }
+
   render() {
     return (
       <>
@@ -67,7 +71,7 @@ class Profile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={style.button}>
+            <TouchableOpacity onPress={this.logout} style={style.button}>
               <Text style={style.buttonText}>Sign Out</Text>
             </TouchableOpacity>
           </View>

@@ -17,19 +17,10 @@ export default class Signin extends Component {
       isLoaded: false
     }
   }
-<<<<<<< HEAD
 
   register = () => {
     this.props.navigation.navigate('register')
   }
-=======
-  register = () => {
-    this.props.navigation.navigate('register')
-  }
-  login = () => {
-    this.props.navigation.navigate('home')
-  }
->>>>>>> origin/developp
   render() {
     return (
       <>
@@ -60,13 +51,8 @@ export default class Signin extends Component {
                 <Text style={loginStyle.textDivider}>ATAU</Text>
                 <View style={loginStyle.line}/>
               </View>
-<<<<<<< HEAD
               <TouchableOpacity style={loginStyle.btnJoin}>
                 <Text style={loginStyle.btnText} onPress={this.register}>JOIN NOW</Text>
-=======
-              <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
-                <Text style={loginStyle.btnText}>JOIN NOW</Text>
->>>>>>> origin/developp
               </TouchableOpacity>
               <TouchableOpacity style={loginStyle.btnHelp}>
                 <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
