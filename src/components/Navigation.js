@@ -16,6 +16,10 @@ import OTP from '../screens/OTP'
 import CreatePin from '../screens/CreatePin'
 import CreatePinConfirmation from '../screens/CreatePinConfirmation'
 import EditSecurityCode from '../screens/EditSecurityCode'
+import PLNSuccess from '../screens/PLNSuccess'
+import TransferSuccess from '../screens/TransferSuccess'
+import HistoryDetail from '../screens/HistoryDetail'
+import PromoDetail from '../screens/PromoDetail'
 
 const Stack = createStackNavigator()
 
@@ -128,6 +132,34 @@ export default class Navigation extends Component {
               name='create-pin-confirmation'
               options={{
                 title: 'VERIFIKASI PIN',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={PLNSuccess}
+              name='pln-success'
+              options={{headerShown: false }}
+            />
+            <Stack.Screen 
+              component={TransferSuccess}
+              name='transfer-success'
+              options={{headerShown: false }}
+            />
+            <Stack.Screen 
+              component={HistoryDetail}
+              name='history-detail'
+              options={{
+                title: 'HISTORY',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
+            />
+            <Stack.Screen 
+              component={PromoDetail}
+              name='promo-detail'
+              options={{
+                title: 'DETAIL PROMO',
                 headerTintColor: '#fff',
                 headerStyle: {backgroundColor: '#583A8E'}
               }}

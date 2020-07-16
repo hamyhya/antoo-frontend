@@ -16,6 +16,9 @@ export default class Promo extends Component {
       nominal: ''
     }
   }
+  detail = () => {
+    this.props.navigation.navigate('promo-detail')
+  }
   render() {
     const data = [
       {
@@ -59,9 +62,11 @@ export default class Promo extends Component {
                   style={style.flatlist}
                   data={data}
                   renderItem={({item}) =>
-                  <List
-                    title={item.title}
-                  />
+                  <TouchableOpacity style={style.promoBtn} onPress={this.detail}>
+                    <List
+                      title={item.title}
+                    />
+                  </TouchableOpacity>
                 }
                 keyExtractor={item => item.id.toString()}
                 />
@@ -77,12 +82,10 @@ class List extends Component {
   render(){
     return(
       <>
-        <TouchableOpacity style={style.promoBtn}>
-          <View style={style.imgWrapper}>
-            <Image source={slide} style={style.promoImg} />
-          </View>
-          <Text style={style.promoTitle}>{this.props.title}</Text>
-        </TouchableOpacity>
+        <View style={style.imgWrapper}>
+          <Image source={slide} style={style.promoImg} />
+        </View>
+        <Text style={style.promoTitle}>{this.props.title}</Text>
       </>
     )
   }

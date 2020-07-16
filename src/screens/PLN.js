@@ -14,6 +14,9 @@ export default class PLN extends Component {
       nominal: ''
     }
   }
+  topup = () => {
+    this.props.navigation.navigate('pln-success')
+  }
   render() {
     return (
       <>
@@ -53,7 +56,7 @@ export default class PLN extends Component {
               />
             </View>
             <View style={style.btnTopUpWrapper}>
-              <TouchableOpacity style={style.btnTopUp}>
+              <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
                 <Text style={style.btnTopUpText}>TOP UP</Text>
               </TouchableOpacity>
             </View>
