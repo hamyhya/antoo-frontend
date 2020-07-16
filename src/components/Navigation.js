@@ -16,6 +16,7 @@ import OTP from '../screens/OTP'
 import CreatePin from '../screens/CreatePin'
 import CreatePinConfirmation from '../screens/CreatePinConfirmation'
 import EditSecurityCode from '../screens/EditSecurityCode'
+import PLNSuccess from '../screens/PLNSuccess'
 
 const Stack = createStackNavigator()
 
@@ -131,6 +132,11 @@ export default class Navigation extends Component {
                 headerTintColor: '#fff',
                 headerStyle: {backgroundColor: '#583A8E'}
               }}
+            />
+            <Stack.Screen 
+              component={PLNSuccess}
+              name='pln-success'
+              options={{headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
