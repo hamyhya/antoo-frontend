@@ -15,19 +15,20 @@ class LoginPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      email: this.props.route.params.email,
       pin: ''
     }
   }
   login  = () => {
     const dataSubmit = {
-      pin: this.state.pin,
+      password: this.state.pin,
+      email: this.state.email
     }
     const {pin} = this.state
     if (pin == ""){
-      Alert.alert('Please fill All Column')
+      Alert.alert('Please Enter Your PIN')
     } else {
       this.props.loginUser(dataSubmit).then((response) => {
-        Alert.alert('Holaa Login Success!!')
         this.props.navigation.navigate('mainmenu')
       }).catch(function (error) {
         Alert.alert('Wrong Email or Password!')

@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  Image,
-  Button,
-  TextInput,
+  Alert,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
   StatusBar,
-  CheckBox
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome'
+
+import {connect} from 'react-redux'
+import {logout} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -21,8 +21,29 @@ class Profile extends Component {
   editProfile = () => {
     this.props.navigation.navigate('editProfile')
   }
-
+  logoutModal = () => {
+    Alert.alert(
+      'Are you sure?',
+      "You'll leave me alone :(",
+      [
+        {
+          text: '',
+          // onPress: () => console.log('Ask me later pressed')
+        },
+        {
+          text: 'Cancel',
+          // onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'Logout', 
+          onPress: this.logout 
+      }
+      ],
+      { cancelable: false }
+    )
+  }
   logout = () => {
+    this.props.logout()
     this.props.navigation.navigate('login')
   }
 
@@ -33,7 +54,7 @@ class Profile extends Component {
   render() {
     return (
       <>
-        <StatusBar backgroundColor='#ECE9F6' />
+        <StatusBar backgroundColor='#4C2B86' />
         <View style={style.fill}>
           <View style={style.content}>
             <View style={style.profile}>
@@ -75,8 +96,8 @@ class Profile extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity onPress={this.logout} style={style.button}>
-              <Text style={style.buttonText}>Sign Out</Text>
+            <TouchableOpacity onPress={this.logoutModal} style={style.button}>
+              <Text style={style.buttonText}>Logout</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,7 +106,9 @@ class Profile extends Component {
   }
 }
 
-export default Profile
+const mapDispatchToProps = {logout}
+
+export default connect(null, mapDispatchToProps)(Profile)
 
 const style = StyleSheet.create({
   fill: {
@@ -166,7 +189,7 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
-    backgroundColor: '#583A8E',
+    backgroundColor: '#d32f2f',
     borderRadius: 25,
   },
   buttonText: {

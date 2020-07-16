@@ -8,5 +8,23 @@ const loginUser = (dataSubmit) => {
     payload: http().post(`${ip}auth/login`, dataSubmit)
   }
 }
+const registerUser = (dataSubmit) => {
+  return {
+    type: 'REGISTER',
+    payload: http().post(`${ip}auth/register`, dataSubmit)
+  }
+}
+const verifyUser = (otp) => {
+  return {
+    type: 'REGISTER',
+    payload: http().patch(`${ip}auth/activation`, otp)
+  }
+}
+const logout = () => {
+  return {
+    type: 'LOGOUT',
+    payload: ''
+  }
+}
 
-export {loginUser}
+export {loginUser, registerUser, verifyUser, logout}

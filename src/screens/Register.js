@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {
   View,
   Text,
-  Button,
+  Alert,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -10,23 +10,41 @@ import {
 } from 'react-native'
 
 class Register extends Component {
-  otp = () => {
-    this.props.navigation.navigate('otp')
+  constructor(props){
+    super(props)
+    this.state = {
+      email: ''
+    }
+  }
+  createPin = () => {
+    const {email} = this.state
+
+    if(email !== '') {
+      this.props.navigation.navigate('create-pin', {email: email})
+    }else {
+      Alert.alert('Oops!', 'Please fill the form')
+    }
   }
   render(){
     return(
       <>
         <View style={style.form}>
-          <Text style={style.header}>Terimakasih telah bergabung kami akan mengirimkan kode SMS dan Email untuk verfikasi proses registrasi</Text>
-          <TextInput style={style.textInput} placeholder='Nama Lengkap' underlineColorAndroid={'transparent'} color="black" ></TextInput>
-          <TextInput style={style.textInput} placeholder='Nomor Ponsel' underlineColorAndroid={'transparent'} color="black" ></TextInput>
-          <TextInput style={style.textInput} placeholder='Email' underlineColorAndroid={'transparent'} color='black' ></TextInput>
-          <TextInput style={style.textInput} placeholder='Kode Promosi (Optional)' underlineColorAndroid={'transparent'} color="black" ></TextInput>
+          <Text style={style.header}>Terimakasih telah bergabung! kami akan mengirimkan kode OTP melalui Email untuk verfikasi proses registrasi</Text>
+          {/* <TextInput style={style.textInput} placeholder='Nama Lengkap' underlineColorAndroid={'transparent'} color="black" ></TextInput>
+          <TextInput style={style.textInput} placeholder='Nomor Ponsel' underlineColorAndroid={'transparent'} color="black" ></TextInput> */}
+          <TextInput 
+            style={style.textInput} 
+            placeholder='Email' 
+            underlineColorAndroid={'transparent'} 
+            color='black' 
+            onChangeText={(e) => {this.setState({email: e})}}  
+          ></TextInput>
+          {/* <TextInput style={style.textInput} placeholder='Kode Promosi (Optional)' underlineColorAndroid={'transparent'} color="black" ></TextInput>
           <View style={style.checkboxContainer}>
             <CheckBox style={style.checkbox}></CheckBox>
             <Text style={style.textCheckbox}>Saya setuju dengan kesepakatan dan persetujuan aplikasi</Text>
-          </View>
-          <TouchableOpacity style={style.button} onPress={this.otp}>
+          </View> */}
+          <TouchableOpacity style={style.button} onPress={this.createPin}>
             <Text style={style.buttonText}>BERIKUTNYA</Text>
           </TouchableOpacity>
         </View>
@@ -61,7 +79,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 300,
     backgroundColor: '#01B0B7',
     borderRadius: 25,
   },

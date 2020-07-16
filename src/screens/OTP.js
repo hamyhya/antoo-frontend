@@ -1,22 +1,35 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, ScrollView}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
+import {connect} from 'react-redux'
+import {verifyUser} from '../redux/actions/auth'
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class OTP extends Component {
+class OTP extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      pin: ''
+      email: this.props.route.params.email,
+      otp: ''
     }
   }
-  createPin  = () => {
-    this.props.navigation.navigate('create-pin')
+  verify  = () => {
+    const dataSubmit = {
+      otp: this.state.otp
+    }
+
+    this.props.verifyUser(dataSubmit).then(() =>{
+      this.props.navigation.navigate('login')
+      Alert.alert('Success!', "You're now verified")
+    }).catch(function () {
+      Alert.alert('Invalid OTP!')
+    })
   }
   render() {
     return (
@@ -29,7 +42,7 @@ export default class OTP extends Component {
             </View>
             <View style={style.subtitleWrapper}>
               <Text>Kami telah mengirimkan kode ke </Text>
-              <Text style={style.email}>ronaldowanto@gmail.com</Text>
+              <Text style={style.email}>{this.state.email}</Text>
             </View>
             <SmoothPinCodeInput
               cellStyle={{
@@ -39,11 +52,11 @@ export default class OTP extends Component {
               cellStyleFocused={{
                 borderColor: 'black',
               }}
-              value={this.state.pin}
-              onTextChange={pin => this.setState({ pin })}
+              value={this.state.otp}
+              onTextChange={otp => this.setState({ otp })}
               />
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp} onPress={this.createPin}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.verify}>
                   <Text style={style.btnTopUpText}>VERIFIKASI</Text>
                 </TouchableOpacity>
               </View>
@@ -53,6 +66,12 @@ export default class OTP extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+const mapDispatchToProps = {verifyUser}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OTP)
 
 const style = StyleSheet.create({
   fill: {

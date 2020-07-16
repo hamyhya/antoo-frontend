@@ -5,18 +5,37 @@ import {Text, View, Image, StyleSheet, Dimensions, TextInput,
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
+import {connect} from 'react-redux'
+import {registerUser} from '../redux/actions/auth'
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class CreatePinConfirmation extends Component {
+class CreatePinConfirmation extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      pin: ''
+      email: this.props.route.params.email,
+      pin: this.props.route.params.pin,
+      conf_pin: '' 
     }
   }
-  login  = () => {
-    this.props.navigation.navigate('mainmenu')
+  otp  = () => {
+    const dataSubmit = {
+      email: this.state.email,
+      password: this.state.pin,
+      confirm_password: this.state.conf_pin
+    }
+
+    if(dataSubmit.password === dataSubmit.confirm_password) {
+      this.props.registerUser(dataSubmit).then(() =>{
+        this.props.navigation.navigate('otp', {email: dataSubmit.email})
+      }).catch(function () {
+        Alert.alert('Register Failed')
+      })
+    } else{
+      Alert.Alert("PIN does'nt match")
+    }
   }
   render() {
     return (
@@ -36,11 +55,11 @@ export default class CreatePinConfirmation extends Component {
               cellStyleFocused={{
                 borderColor: 'black',
               }}
-              value={this.state.pin}
-              onTextChange={pin => this.setState({ pin })}
+              value={this.state.conf_pin}
+              onTextChange={conf_pin => this.setState({ conf_pin })}
               />
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.otp}>
                   <Text style={style.btnTopUpText}>SIGN UP</Text>
                 </TouchableOpacity>
               </View>
@@ -50,6 +69,13 @@ export default class CreatePinConfirmation extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+const mapDispatchToProps = {registerUser}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePinConfirmation)
 
 const style = StyleSheet.create({
   fill: {

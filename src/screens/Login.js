@@ -23,24 +23,12 @@ class Login extends Component {
   register = () => {
     this.props.navigation.navigate('register')
   }
-  login = () => {
-    this.props.navigation.navigate('login-pin')
-  }
-
   loginUser = () => {
-    const dataSubmit = {
-      email: this.state.email,
-    }
     const {email} = this.state
-    if (email == ""){
+    if (email === ""){
       Alert.alert('Please fill All Column')
     } else {
-      this.props.loginUser(dataSubmit).then((response) => {
-        Alert.alert('Okayy Input Your Pin')
-        this.props.navigation.navigate('login-pin')
-      }).catch(function (error) {
-        Alert.alert('Wrong Email or Password!')
-      })
+      this.props.navigation.navigate('login-pin', {email: this.state.email})
     }
   }
 

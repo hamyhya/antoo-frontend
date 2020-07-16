@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, ScrollView}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -12,11 +12,19 @@ export default class CreatePin extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      email: this.props.route.params.email,
       pin: ''
     }
   }
   verifPin  = () => {
-    this.props.navigation.navigate('create-pin-confirmation')
+    const {email, pin} = this.state
+    
+    if(email !== '' && pin !== '') {
+      this.props.navigation.navigate('create-pin-confirmation', {email: email, pin: pin})
+    }else {
+      Alert.alert('Oops!', 'Please fill the form')
+    }
+    
   }
   render() {
     return (

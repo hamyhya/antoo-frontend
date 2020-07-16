@@ -4,7 +4,7 @@ const initialState = {
   isError: false,
   errorMsg: '',
   token: null,
-  dataLogin: []
+  dataLogin: [],
 }
 
 const auth = (state=initialState, action) => {
@@ -30,8 +30,30 @@ const auth = (state=initialState, action) => {
         isLoading: false,
         isLogin: true,
         isError: false,
-        token: action.payload.data.token,
-        dataLogin: action.payload.data
+        token: action.payload.data.data.token,
+        dataLogin: action.payload.data.data
+      }
+    }
+    case 'REGISTER_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    }
+    case 'REGISTER_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: action.payload.response.data.message,
+      }
+    }
+    case 'REGISTER_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
       }
     }
     case 'LOGOUT': {
@@ -40,7 +62,8 @@ const auth = (state=initialState, action) => {
         isLoading: false,
         isLogin: false,
         isError: false,
-        token: null
+        token: null,
+        dataLogin: []
       }
     }
     default: {
