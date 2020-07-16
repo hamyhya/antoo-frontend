@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar}
+        TouchableOpacity, StatusBar, Alert}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import bg from '../assets/img/bg.png';
 
+import {connect} from 'react-redux'
+import {loginUser} from '../redux/actions/auth'
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class Signin extends Component {
+class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,6 +26,24 @@ export default class Signin extends Component {
   login = () => {
     this.props.navigation.navigate('login-pin')
   }
+
+  loginUser = () => {
+    const dataSubmit = {
+      email: this.state.email,
+    }
+    const {email} = this.state
+    if (email == ""){
+      Alert.alert('Please fill All Column')
+    } else {
+      this.props.loginUser(dataSubmit).then((response) => {
+        Alert.alert('Okayy Input Your Pin')
+        this.props.navigation.navigate('login-pin')
+      }).catch(function (error) {
+        Alert.alert('Wrong Email or Password!')
+      })
+    }
+  }
+
   render() {
     return (
       <>
@@ -40,12 +61,13 @@ export default class Signin extends Component {
                   <Icon name='user' color='white' size={18}/>
                 </View>
                 <TextInput 
+                  onChangeText={(e) => {this.setState({email: e})}}
                   style={loginStyle.textInput}
                   placeholder='Email'
                   placeholderTextColor='white'
                 />
               </View>
-              <TouchableOpacity style={loginStyle.btnSignin} onPress={this.login}>
+              <TouchableOpacity style={loginStyle.btnSignin} onPress={this.loginUser}>
                 <Text style={loginStyle.btnText}>SIGN IN</Text>
               </TouchableOpacity>
               <View style={loginStyle.divider}>
@@ -66,6 +88,10 @@ export default class Signin extends Component {
     );
   }
 }
+
+const mapDispatchToProps = {loginUser}
+
+export default connect(null, mapDispatchToProps)(Login)
 
 const loginStyle = StyleSheet.create({
   fill: {

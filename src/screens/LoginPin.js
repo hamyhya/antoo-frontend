@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView}
+        TouchableOpacity, StatusBar, Alert, ScrollView}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
+import {connect} from 'react-redux'
+import {loginUser} from '../redux/actions/auth'
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class LoginPin extends Component {
+class LoginPin extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +19,20 @@ export default class LoginPin extends Component {
     }
   }
   login  = () => {
-    this.props.navigation.navigate('mainmenu')
+    const dataSubmit = {
+      pin: this.state.pin,
+    }
+    const {pin} = this.state
+    if (pin == ""){
+      Alert.alert('Please fill All Column')
+    } else {
+      this.props.loginUser(dataSubmit).then((response) => {
+        Alert.alert('Holaa Login Success!!')
+        this.props.navigation.navigate('mainmenu')
+      }).catch(function (error) {
+        Alert.alert('Wrong Email or Password!')
+      })
+    }
   }
   render() {
     return (
@@ -52,6 +68,10 @@ export default class LoginPin extends Component {
     );
   }
 }
+
+const mapDispatchToProps = {loginUser}
+
+export default connect(null, mapDispatchToProps)(LoginPin)
 
 const style = StyleSheet.create({
   fill: {
