@@ -26,10 +26,14 @@ class Profile extends Component {
     this.props.navigation.navigate('login')
   }
 
+  editSecurityCode = () => {
+    this.props.navigation.navigate('editSecurity')
+  }
+
   render() {
     return (
       <>
-        <StatusBar backgroundColor='#fff' />
+        <StatusBar backgroundColor='#ECE9F6' />
         <View style={style.fill}>
           <View style={style.content}>
             <View style={style.profile}>
@@ -56,8 +60,8 @@ class Profile extends Component {
             <View style={style.contentBadge}>
               <View style={style.account}>
                 <Text style={style.textBadge}>Security</Text>
-                <TouchableOpacity style={style.list}>
-                  <Icon name='user' color='black' size={18}></Icon>
+                <TouchableOpacity onPress={this.editSecurityCode} style={style.list}>
+                  <Icon name='user' color='black' size={18} />
                   <Text style={style.title}>Ubah Security Code</Text>
                 </TouchableOpacity>
               </View>
@@ -161,7 +165,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 180,
+    marginTop: 40,
     backgroundColor: '#583A8E',
     borderRadius: 25,
   },

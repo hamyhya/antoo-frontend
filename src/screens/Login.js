@@ -17,9 +17,11 @@ export default class Signin extends Component {
       isLoaded: false
     }
   }
-
   register = () => {
     this.props.navigation.navigate('register')
+  }
+  login = () => {
+    this.props.navigation.navigate('login-pin')
   }
   render() {
     return (
@@ -51,8 +53,8 @@ export default class Signin extends Component {
                 <Text style={loginStyle.textDivider}>ATAU</Text>
                 <View style={loginStyle.line}/>
               </View>
-              <TouchableOpacity style={loginStyle.btnJoin}>
-                <Text style={loginStyle.btnText} onPress={this.register}>JOIN NOW</Text>
+              <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
+                <Text style={loginStyle.btnText}>JOIN NOW</Text>
               </TouchableOpacity>
               <TouchableOpacity style={loginStyle.btnHelp}>
                 <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>

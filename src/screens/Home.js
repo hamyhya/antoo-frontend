@@ -23,6 +23,18 @@ export default class Home extends Component {
   register = () => {
     this.props.navigation.navigate('register')
   }
+  topUp = () => {
+    this.props.navigation.navigate('top-up')
+  }
+  transfer = () => {
+    this.props.navigation.navigate('transfer')
+  }
+  promo = () => {
+    this.props.navigation.navigate('promo-all')
+  }
+  listrik = () => {
+    this.props.navigation.navigate('listrik')
+  }
   render() {
     const data = [
       {
@@ -54,15 +66,15 @@ export default class Home extends Component {
               </View>
             </View>
             <View style={style.menuWrapper}>
-              <TouchableOpacity style={style.iconWrapper}>
+              <TouchableOpacity style={style.iconWrapper} onPress={this.topUp}>
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Top Up</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper}>
+              <TouchableOpacity style={style.iconWrapper} onPress={this.transfer}>
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Transfer</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper}>
+              <TouchableOpacity style={style.iconWrapper} onPress={this.listrik}>
                 <Icon name='plus-circle' size={20} color='#4C2B86' />
                 <Text style={style.iconText}>Listrik</Text>
               </TouchableOpacity>
@@ -70,20 +82,20 @@ export default class Home extends Component {
             <View style={style.promo}>
               <View style={style.headerPromo}>
                 <Text style={style.headerPromoTitle}>Info dan Promo Spesial</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.promo}>
                   <Text style={style.headerPromoTitleBtn}>Lihat Semua</Text>
                 </TouchableOpacity>
               </View>
               <View style={style.contentPromo}>
                 <FlatList
-                  style={{width: deviceWidth}}
+                  style={style.flatlist}
                   data={data}
                   renderItem={({item}) =>
                   <Promo
                     title={item.title}
                   />
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 />
               </View>
             </View>
@@ -186,9 +198,13 @@ const style = StyleSheet.create({
     color: '#4C2B86',
     fontWeight: 'bold'
   },
+  flatlist: {
+    width: deviceWidth,
+    height: 260
+  },
   promo: {
     width: deviceWidth,
-    height: 380,
+    height: 350,
     backgroundColor: 'white',
     marginTop: 30,
     paddingLeft: 20,
