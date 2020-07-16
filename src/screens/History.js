@@ -13,6 +13,9 @@ const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 class History extends Component {
+  detail = () => {
+    this.props.navigation.navigate('history-detail')
+  }
   render() {
 
     const DATA = [
@@ -38,7 +41,7 @@ class History extends Component {
             style={style.content}
             data={DATA}
             renderItem={({ item }) => (
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.detail}>
                 <View style={style.transactionsList}>
                   <Text style={style.bookTitle}>{item.title}</Text>
                   {/* <Text style={style.bookTitle}>{item.description}</Text> */}

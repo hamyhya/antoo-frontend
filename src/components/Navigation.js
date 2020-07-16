@@ -18,6 +18,7 @@ import CreatePinConfirmation from '../screens/CreatePinConfirmation'
 import EditSecurityCode from '../screens/EditSecurityCode'
 import PLNSuccess from '../screens/PLNSuccess'
 import TransferSuccess from '../screens/TransferSuccess'
+import HistoryDetail from '../screens/HistoryDetail';
 
 const Stack = createStackNavigator()
 
@@ -143,6 +144,15 @@ export default class Navigation extends Component {
               component={TransferSuccess}
               name='transfer-success'
               options={{headerShown: false }}
+            />
+            <Stack.Screen 
+              component={HistoryDetail}
+              name='history-detail'
+              options={{
+                title: 'HISTORY',
+                headerTintColor: '#fff',
+                headerStyle: {backgroundColor: '#583A8E'}
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>
