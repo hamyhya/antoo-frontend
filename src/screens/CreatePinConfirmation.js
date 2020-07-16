@@ -28,6 +28,7 @@ export default class CreatePinConfirmation extends Component {
               <Text style={style.headerTitle}>Masukkin Sekali Lagi PIN-nya</Text>
             </View>
             <SmoothPinCodeInput
+              codeLength={6}
               cellStyle={{
                 borderBottomWidth: 2,
                 borderColor: 'gray',

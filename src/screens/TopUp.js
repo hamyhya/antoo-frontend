@@ -14,6 +14,9 @@ export default class TopUp extends Component {
       nominal: ''
     }
   }
+  topup = () => {
+    this.props.navigation.navigate('transfer-success')
+  }
   render() {
     return (
       <>
@@ -65,7 +68,7 @@ export default class TopUp extends Component {
                 </View>
               </View>
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
                   <Text style={style.btnTopUpText}>TOP UP</Text>
                 </TouchableOpacity>
               </View>

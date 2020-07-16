@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class PLNSuccess extends Component {
+export default class TransferSuccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -28,12 +28,12 @@ export default class PLNSuccess extends Component {
               <Text>2 Mei 2020, 06:38</Text>
             </View>
             <View style={style.contentWrapper}>
-              <Text>Top Up PLN Prabayar :</Text>
+              <Text>Transfer ke :</Text>
               <View style={style.plnIdWrapper}>
-                <Text style={style.plnId}>1237632876381</Text>
+                <Text style={style.plnId}>renoir_joss@mail.com</Text>
               </View>
-              <Text>No. Token :</Text>
-              <Text style={style.token}>8762-8237-9239-2301-1230</Text>
+              <Text>Nominal :</Text>
+              <Text style={style.token}>Rp. 100.000</Text>
               <View style={style.infoWrapper}>
                 <Text>Your Balance :</Text>
                 <Text style={style.balance}>Rp. 100.000</Text>
@@ -103,7 +103,6 @@ const style = StyleSheet.create({
   },
   plnId: {
     fontWeight: 'bold',
-    letterSpacing: 4,
   },
   token: {
     fontWeight: 'bold',

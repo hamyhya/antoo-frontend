@@ -17,6 +17,7 @@ import CreatePin from '../screens/CreatePin'
 import CreatePinConfirmation from '../screens/CreatePinConfirmation'
 import EditSecurityCode from '../screens/EditSecurityCode'
 import PLNSuccess from '../screens/PLNSuccess'
+import TransferSuccess from '../screens/TransferSuccess'
 
 const Stack = createStackNavigator()
 
@@ -136,6 +137,11 @@ export default class Navigation extends Component {
             <Stack.Screen 
               component={PLNSuccess}
               name='pln-success'
+              options={{headerShown: false }}
+            />
+            <Stack.Screen 
+              component={TransferSuccess}
+              name='transfer-success'
               options={{headerShown: false }}
             />
           </Stack.Navigator>

@@ -28,6 +28,7 @@ export default class CreatePin extends Component {
               <Text style={style.headerTitle}>Buat PIN Antoo Kamu</Text>
             </View>
             <SmoothPinCodeInput
+              codeLength={6}
               cellStyle={{
                 borderBottomWidth: 2,
                 borderColor: 'gray',

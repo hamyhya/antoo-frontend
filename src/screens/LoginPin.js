@@ -28,6 +28,7 @@ export default class LoginPin extends Component {
               <Text style={style.headerTitle}>Masukkan Security Code Anda</Text>
             </View>
             <SmoothPinCodeInput
+              codeLength={6}
               cellStyle={{
                 borderBottomWidth: 2,
                 borderColor: 'gray',

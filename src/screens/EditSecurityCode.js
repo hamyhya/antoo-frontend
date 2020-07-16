@@ -31,6 +31,7 @@ export default class OTP extends Component {
               <Text style={style.textCaution}>Security Code digunakan untuk masuk ke akun Anda dan bertransaksi</Text>
             </View>
             <SmoothPinCodeInput
+              codeLength={6}
               cellStyle={{
                 borderBottomWidth: 2,
                 borderColor: 'gray',
