@@ -33,21 +33,11 @@ class EditProfile extends Component {
             </View>
             <View style={style.content2}>
               <Text style={style.textContent}>Nama Lengkap</Text>
-              <Text style={style.textInput}>BaniSholih</Text>
+              <TextInput style={style.textInput} placeholder='antoo' />
               <Text style={style.textContent}>Nomor Ponsel</Text>
-              <Text style={style.textFill}>082112720993</Text>
-              <View style={style.contentFill1}>
-                <TouchableOpacity style={style.btnEditImage}>
-                  <Text style={style.btnEditText2}>Edit</Text>
-                </TouchableOpacity>
-              </View>
+              <TextInput style={style.textFill} placeholder='0808080808' />
               <Text style={style.textContent}>Email</Text>
-              <Text style={style.textFill}>banisholih23@gmail.com</Text>
-              <View style={style.contentFill1}>
-                <TouchableOpacity style={style.btnEditImage}>
-                  <Text style={style.btnEditText2}>Edit</Text>
-                </TouchableOpacity>
-              </View>
+              <TextInput style={style.textFill} placeholder='banisholih23@gmail.com'/>
             </View>
             <TouchableOpacity style={style.button}>
               <Text style={style.buttonText}>SIMPAN</Text>
@@ -123,7 +113,7 @@ const style = StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 380,
+    marginTop: 40,
     backgroundColor: '#80DADA',
     borderRadius: 25,
   },

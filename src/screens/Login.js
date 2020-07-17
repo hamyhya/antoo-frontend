@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
+        TouchableOpacity, StatusBar, Alert, KeyboardAvoidingView,
+        ActivityIndicator}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AnimatedSplash from 'react-native-animated-splash-screen'
@@ -42,17 +43,17 @@ class Login extends Component {
 
   render() {
     const {isLoaded} = this.state
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
-        {isLoaded ? (
-          <View style={loginStyle.fill}>
-            <Image source={bg} style={loginStyle.accent1}/>
-            <View style={loginStyle.accent1} />
-            <View style={loginStyle.accent2}>
-              <View style={loginStyle.titleWrapper}>
-                <Text style={loginStyle.title}>Antoo.</Text>
-              </View>
+        <KeyboardAvoidingView behavior={'position'} style={loginStyle.fill}>
+          <Image source={bg} style={loginStyle.accent1}/>
+          <View style={loginStyle.accent1} />
+          <View style={loginStyle.accent2}>
+            <View style={loginStyle.titleWrapper}>
+              <Text style={loginStyle.title}>Antoo.</Text>
+            </View>
               <View style={loginStyle.formWrapper}>
                 <View style={loginStyle.inputWrapper}>
                   <View style={loginStyle.iconWrapper}>
@@ -81,16 +82,7 @@ class Login extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
-        ):(
-          <AnimatedSplash
-          translucent={true}
-          isLoaded={this.state.isLoaded}
-          logoImage={require("../assets/img/splash.png")}
-          backgroundColor={"#4C2B86"}
-          logoHeight={150}
-          logoWidht={150}/>
-        )}
+        </KeyboardAvoidingView>
       </>
     );
   }

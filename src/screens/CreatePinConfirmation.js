@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ActivityIndicator}
+import {Text, View, StyleSheet, Dimensions, 
+        TouchableOpacity, StatusBar, ActivityIndicator, Alert}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
