@@ -1,23 +1,39 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView}
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
+        TouchableOpacity, StatusBar, ActivityIndicator}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+        
+import {connect} from 'react-redux'
+import {pln} from '../redux/actions/transaction'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class PLN extends Component {
+class PLN extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      amount: '',
+      token: this.props.auth.token,
+      error: this.props.transaction.errorMsg,
+      customer: ''
     }
   }
   topup = () => {
-    this.props.navigation.navigate('pln-success')
+    const {token, error, customer} = this.state
+    const dataSubmit = {
+      amount: this.state.amount,
+    }
+
+    this.props.pln(dataSubmit, token).then(() => {
+      this.props.navigation.navigate('pln-success', {customer: customer})
+    }).catch(function () {
+      Alert.alert('Ooops!', error)
+    })
   }
   render() {
+    const {isLoading} = this.props.transaction
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -25,26 +41,30 @@ export default class PLN extends Component {
           <View style={style.accent2}>
             <View style={style.header}>
               <Text style={style.headerTitle}>Listrik Prabayar</Text>
-              <TextInput style={style.nominalInput} placeholder='Nomor Pelanggan PLN' />
+              <TextInput 
+                style={style.nominalInput} 
+                placeholder='Nomor Pelanggan PLN' 
+                onChangeText={(e) => {this.setState({customer: e})}}
+              />
             </View>
             <View style={style.nominal}>
               <Text style={style.headerTitle}>Pilih Nominal</Text>
               <View style={style.nominalWrapper}>
                 <TouchableOpacity 
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({nominal: '100000'})}}
+                  onPress={() => {this.setState({amount: '100000'})}}
                 >
                   <Text style={style.nominalBtnText}>Rp 100.000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({nominal: '200000'})}}
+                  onPress={() => {this.setState({amount: '200000'})}}
                 >
                   <Text style={style.nominalBtnText}>Rp 200.000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({nominal: '500000'})}}
+                  onPress={() => {this.setState({amount: '500000'})}}
                 >
                   <Text style={style.nominalBtnText}>Rp 500.000</Text>
                 </TouchableOpacity>
@@ -52,12 +72,17 @@ export default class PLN extends Component {
               <TextInput 
                 placeholder='Ketik Nominal'
                 style={style.nominalInput} 
-                value={this.state.nominal}
+                value={this.state.amount}
+                onChangeText={(e) => {this.setState({amount: e})}}
               />
             </View>
             <View style={style.btnTopUpWrapper}>
               <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
-                <Text style={style.btnTopUpText}>TOP UP</Text>
+                {isLoading ? (
+                  <ActivityIndicator size='large' color='white' />
+                ):(
+                  <Text style={style.btnTopUpText}>TOP UP</Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -66,6 +91,14 @@ export default class PLN extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  transaction: state.transaction
+})
+const mapDispatchToProps = {pln}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PLN)
 
 const style = StyleSheet.create({
   fill: {

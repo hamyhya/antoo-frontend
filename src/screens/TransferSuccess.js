@@ -2,41 +2,47 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, ScrollView}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+
+import {connect} from 'react-redux'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class TransferSuccess extends Component {
+class TransferSuccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      email: this.props.route.params.email,
+      amount: this.props.transaction.dataTransfer.amount,
+      balance: this.props.transaction.dataTransfer.balance,
+      id: this.props.transaction.dataTransfer.id,
     }
   }
   home = () => {
     this.props.navigation.navigate('mainmenu')
   }
   render() {
+    const {email, id, amount, balance} = this.state
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
         <View style={style.fill}>
           <View style={style.accent2}>
             <View style={style.header}>
-              <Text style={style.headerTitle}>Berhasil</Text>
-              <Text>2 Mei 2020, 06:38</Text>
+              <Text style={style.headerTitle}>Transfer Berhasil</Text>
+              <Text>ID transaksi: {id}</Text>
             </View>
             <View style={style.contentWrapper}>
               <Text>Transfer ke :</Text>
               <View style={style.plnIdWrapper}>
-                <Text style={style.plnId}>renoir_joss@mail.com</Text>
+                <Text style={style.plnId}>{email}</Text>
               </View>
               <Text>Nominal :</Text>
-              <Text style={style.token}>Rp. 100.000</Text>
+              <Text style={style.token}>Rp. {amount}</Text>
               <View style={style.infoWrapper}>
                 <Text>Your Balance :</Text>
-                <Text style={style.balance}>Rp. 100.000</Text>
+                <Text style={style.balance}>Rp. {balance}</Text>
               </View>
             </View>
             <View style={style.btnTopUpWrapper}>
@@ -50,6 +56,12 @@ export default class TransferSuccess extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  transaction: state.transaction
+})
+
+export default connect(mapStateToProps)(TransferSuccess)
 
 const style = StyleSheet.create({
   fill: {

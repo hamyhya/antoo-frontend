@@ -32,7 +32,7 @@ class TopUpSuccess extends Component {
         <View style={style.fill}>
           <View style={style.accent2}>
             <View style={style.header}>
-              <Text style={style.headerTitle}>Berhasil</Text>
+              <Text style={style.headerTitle}>Top Up Berhasil</Text>
               <Text>ID transaksi: {id}</Text>
             </View>
             <View style={style.contentWrapper}>
@@ -41,7 +41,7 @@ class TopUpSuccess extends Component {
                 <Text style={style.plnId}>{card}</Text>
               </View>
               <Text>Nominal :</Text>
-              <Text style={style.token}>+ {amount}</Text>
+              <Text style={style.token}>+ Rp. {amount}</Text>
               <View style={style.infoWrapper}>
                 <Text>Your Balance :</Text>
                 <Text style={style.balance}>Rp. {balance}</Text>
