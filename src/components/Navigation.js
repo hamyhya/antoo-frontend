@@ -17,6 +17,8 @@ import LoginPin from '../screens/LoginPin'
 import OTP from '../screens/OTP'
 import CreatePin from '../screens/CreatePin'
 import CreatePinConfirmation from '../screens/CreatePinConfirmation'
+import CreateNewPin from '../screens/CreateNewPin'
+import CreateNewPinConfirmation from '../screens/CreateNewPinConfirmation'
 import EditSecurityCode from '../screens/EditSecurityCode'
 import PLNSuccess from '../screens/PLNSuccess'
 import TransferSuccess from '../screens/TransferSuccess'
@@ -174,6 +176,24 @@ class Navigation extends Component {
                   name='promo-detail'
                   options={{
                     title: 'DETAIL PROMO',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={CreateNewPin}
+                  name='create-new-pin'
+                  options={{
+                    title: 'BUAT PIN',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={CreateNewPinConfirmation}
+                  name='create-new-pin-confirmation'
+                  options={{
+                    title: 'VERIFIKASI PIN',
                     headerTintColor: '#fff',
                     headerStyle: {backgroundColor: '#583A8E'}
                   }}

@@ -16,7 +16,7 @@ export default class OTP extends Component {
     }
   }
   createPin  = () => {
-    this.props.navigation.navigate('create-pin')
+    this.props.navigation.navigate('create-new-pin')
   }
   render() {
     return (

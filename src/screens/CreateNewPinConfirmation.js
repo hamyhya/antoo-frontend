@@ -1,38 +1,40 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
+import {Text, View, StyleSheet, Dimensions, 
+        TouchableOpacity, StatusBar, ActivityIndicator, Alert}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
 import {connect} from 'react-redux'
-import {loginUser} from '../redux/actions/auth'
+import {registerUser} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-class LoginPin extends Component {
+class CreateNewPinConfirmation extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: this.props.route.params.email,
-      pin: ''
+      email: '',
+      pin: '',
+      conf_pin: '' 
     }
   }
-  login  = () => {
+  otp  = () => {
     const dataSubmit = {
+      email: this.state.email,
       password: this.state.pin,
-      email: this.state.email
+      confirm_password: this.state.conf_pin
     }
-    const {pin} = this.state
-    if (pin == ""){
-      Alert.alert('Please Enter Your PIN')
-    } else {
-      this.props.loginUser(dataSubmit).then((response) => {
-        this.props.navigation.navigate('mainmenu')
-      }).catch(function (error) {
-        Alert.alert('Wrong Email or Password!')
+
+    if(dataSubmit.password === dataSubmit.confirm_password) {
+      this.props.registerUser(dataSubmit).then(() =>{
+        this.props.navigation.navigate('otp', {email: dataSubmit.email})
+      }).catch(function () {
+        Alert.alert('Register Failed')
       })
+    } else{
+      Alert.Alert("PIN does'nt match")
     }
   }
   render() {
@@ -43,7 +45,7 @@ class LoginPin extends Component {
         <View style={style.fill}>
           <View style={style.accent2}>
             <View style={style.header}>
-              <Text style={style.headerTitle}>Masukkan Security Code Anda</Text>
+              <Text style={style.headerTitle}>Masukkin Sekali Lagi PIN-nya</Text>
             </View>
             <SmoothPinCodeInput
               codeLength={6}
@@ -54,18 +56,15 @@ class LoginPin extends Component {
               cellStyleFocused={{
                 borderColor: 'black',
               }}
-              value={this.state.pin}
-              onTextChange={pin => this.setState({ pin })}
+              value={this.state.conf_pin}
+              onTextChange={conf_pin => this.setState({ conf_pin })}
               />
-              <TouchableOpacity>
-                <Text style={style.forgetText}>LUPA SECURITY CODE?</Text>
-              </TouchableOpacity>
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.otp}>
                   {isLoading ? (
                     <ActivityIndicator size="large" color="white" />
                   ):(
-                    <Text style={style.btnTopUpText}>SIGNIN</Text>
+                    <Text style={style.btnTopUpText}>SIGN UP</Text>
                   )}
                 </TouchableOpacity>
               </View>
@@ -79,9 +78,9 @@ class LoginPin extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {loginUser}
+const mapDispatchToProps = {registerUser}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPin)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewPinConfirmation)
 
 const style = StyleSheet.create({
   fill: {
@@ -127,7 +126,7 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 250,
+    marginTop: 300,
     alignItems: "center",
     marginBottom: 150
   },
