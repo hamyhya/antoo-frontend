@@ -1,23 +1,45 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView}
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
+        TouchableOpacity, StatusBar, ScrollView, ActivityIndicator}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+
+import {connect} from 'react-redux'
+import {topup} from '../redux/actions/transaction'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class TopUp extends Component {
+class TopUp extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      amount: '',
+      token: this.props.auth.token,
+      card: '',
+      cvv: '',
+      exp: ''
     }
   }
   topup = () => {
-    this.props.navigation.navigate('transfer-success')
+    const {token, card, cvv, exp} = this.state
+    const dataSubmit = {
+      amount: this.state.amount,
+    }
+
+    if (card !== '' && cvv !== '' && exp !== '') {
+      this.props.topup(dataSubmit, token).then(() => {
+        this.props.navigation.navigate('topup-success', {card: card})
+      }).catch(function () {
+        Alert.alert('Oops!', 'Failed top up :(')
+      })
+    } else{
+      Alert.alert('Ooops!', 'Please fill all the form')
+    }
   }
   render() {
+    const {isLoading} = this.props.transaction
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -36,19 +58,19 @@ export default class TopUp extends Component {
                 <View style={style.nominalWrapper}>
                   <TouchableOpacity 
                     style={style.nominalBtn}
-                    onPress={() => {this.setState({nominal: '100000'})}}
+                    onPress={() => {this.setState({amount: '100000'})}}
                   >
                     <Text style={style.nominalBtnText}>Rp 100.000</Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
                     style={style.nominalBtn}
-                    onPress={() => {this.setState({nominal: '200000'})}}
+                    onPress={() => {this.setState({amount: '200000'})}}
                   >
                     <Text style={style.nominalBtnText}>Rp 200.000</Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
                     style={style.nominalBtn}
-                    onPress={() => {this.setState({nominal: '500000'})}}
+                    onPress={() => {this.setState({amount: '500000'})}}
                   >
                     <Text style={style.nominalBtnText}>Rp 500.000</Text>
                   </TouchableOpacity>
@@ -56,20 +78,40 @@ export default class TopUp extends Component {
                 <TextInput 
                   placeholder='Ketik Nominal'
                   style={style.nominalInput} 
-                  value={this.state.nominal}
+                  value={this.state.amount}
+                  onChangeText={(e) => {this.setState({amount: e})}}
                 />
               </View>
               <View style={style.card}>
                 <Text style={style.headerTitle}>Kartu Debit/Kredit</Text>
-                <TextInput placeholder='Nomor Kartu' style={style.nominalInput} />
+                <TextInput 
+                  placeholder='Nomor Kartu' 
+                  style={style.nominalInput} 
+                  value={this.state.card}
+                  onChangeText={(e) => {this.setState({card: e})}}
+                />
                 <View style={style.smallInputWrapper}>
-                  <TextInput placeholder='Exp. Date (06/24)' style={style.smallInput} />
-                  <TextInput placeholder='CVV' style={style.smallInput} />
+                  <TextInput 
+                    placeholder='Exp. Date (06/24)' 
+                    style={style.smallInput} 
+                    value={this.state.exp}
+                    onChangeText={(e) => {this.setState({exp: e})}}
+                  />
+                  <TextInput 
+                    placeholder='CVV' 
+                    style={style.smallInput} 
+                    value={this.state.cvv}
+                    onChangeText={(e) => {this.setState({cvv: e})}}
+                  />
                 </View>
               </View>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
-                  <Text style={style.btnTopUpText}>TOP UP</Text>
+                  {isLoading ? (
+                    <ActivityIndicator size='large' color='white' />
+                  ):(
+                    <Text style={style.btnTopUpText}>TOP UP</Text>
+                  )}
                 </TouchableOpacity>
               </View>
             </ScrollView>
@@ -79,6 +121,14 @@ export default class TopUp extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  transaction: state.transaction
+})
+const mapDispatchToProps = {topup}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopUp)
 
 const style = StyleSheet.create({
   fill: {

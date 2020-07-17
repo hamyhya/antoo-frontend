@@ -24,6 +24,7 @@ import PLNSuccess from '../screens/PLNSuccess'
 import TransferSuccess from '../screens/TransferSuccess'
 import HistoryDetail from '../screens/HistoryDetail'
 import PromoDetail from '../screens/PromoDetail'
+import TopUpSuccess from '../screens/TopUpSuccess'
 
 const Stack = createStackNavigator()
 
@@ -197,6 +198,11 @@ class Navigation extends Component {
                     headerTintColor: '#fff',
                     headerStyle: {backgroundColor: '#583A8E'}
                   }}
+                />
+                <Stack.Screen 
+                  component={TopUpSuccess}
+                  name='topup-success'
+                  options={{headerShown: false }}
                 />
               </>
             )}

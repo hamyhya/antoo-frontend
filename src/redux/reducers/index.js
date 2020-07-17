@@ -4,6 +4,7 @@ import storage from '@react-native-community/async-storage'
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet'
 
 import auth from './auth'
+import transaction from './transaction'
 
 const persistConfig = {
   key: 'root',
@@ -13,7 +14,8 @@ const persistConfig = {
 }
 
 const reducer = combineReducers({
-  auth
+  auth,
+  transaction
 })
 
 export default persistReducer(persistConfig, reducer)
