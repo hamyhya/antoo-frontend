@@ -2,41 +2,32 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, Alert, ActivityIndicator}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
-import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
 import {connect} from 'react-redux'
-import {loginUser} from '../redux/actions/auth'
+import {forgot} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-class LoginPin extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: this.props.route.params.email,
-      pin: ''
+      email: '',
     }
   }
-  login  = () => {
+  forgotToken = () => {
     const dataSubmit = {
-      password: this.state.pin,
       email: this.state.email
     }
-    const {pin} = this.state
-    if (pin == ""){
-      Alert.alert('Please Enter Your PIN')
-    } else {
-      this.props.loginUser(dataSubmit).then((response) => {
-        this.props.navigation.navigate('mainmenu')
-      }).catch(function (error) {
-        Alert.alert('Wrong Email or Password!')
+
+    if (dataSubmit.email !== '') {
+      this.props.forgot(dataSubmit).then(() => {
+        this.props.navigation.navigate('forgot-token')
       })
+    }else {
+      Alert.alert('Ooops!', 'Please input valid email :(')
     }
-  }
-  forgot = () => {
-    this.props.navigation.navigate('forgot-password')
   }
   render() {
     const {isLoading} = this.props.auth
@@ -46,29 +37,19 @@ class LoginPin extends Component {
         <View style={style.fill}>
           <View style={style.accent2}>
             <View style={style.header}>
-              <Text style={style.headerTitle}>Masukkan Security Code Anda</Text>
+              <Text style={style.headerTitle}>Masukkan Email Anda</Text>
             </View>
-            <SmoothPinCodeInput
-              codeLength={6}
-              cellStyle={{
-                borderBottomWidth: 2,
-                borderColor: 'gray',
-              }}
-              cellStyleFocused={{
-                borderColor: 'black',
-              }}
-              value={this.state.pin}
-              onTextChange={pin => this.setState({ pin })}
-              />
-              <TouchableOpacity onPress={this.forgot}>
-                <Text style={style.forgetText}>LUPA SECURITY CODE?</Text>
-              </TouchableOpacity>
+            <TextInput 
+              placeholder='Email' 
+              style={style.email} 
+              onChangeText={(e) => {this.setState({email: e})}}
+            />
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.forgotToken}>
                   {isLoading ? (
                     <ActivityIndicator size="large" color="white" />
                   ):(
-                    <Text style={style.btnTopUpText}>SIGNIN</Text>
+                    <Text style={style.btnTopUpText}>KIRIM KODE</Text>
                   )}
                 </TouchableOpacity>
               </View>
@@ -82,9 +63,9 @@ class LoginPin extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {loginUser}
+const mapDispatchToProps = {forgot}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPin)
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)
 
 const style = StyleSheet.create({
   fill: {
@@ -121,16 +102,16 @@ const style = StyleSheet.create({
     letterSpacing: 2,
     color: '#583A8E'
   },
-  forgetText: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    letterSpacing: 2,
-    color: '#01B0B7',
+  email: {
+    width: deviceWidth-70,
     alignSelf: 'center',
-    marginTop: 30
+    height: 50,
+    borderRadius: 15,
+    padding: 10,
+    backgroundColor: '#F4F4F4'
   },
   btnTopUpWrapper: {
-    marginTop: 250,
+    marginTop: 280,
     alignItems: "center",
     marginBottom: 150
   },

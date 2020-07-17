@@ -25,6 +25,10 @@ import TransferSuccess from '../screens/TransferSuccess'
 import HistoryDetail from '../screens/HistoryDetail'
 import PromoDetail from '../screens/PromoDetail'
 import TopUpSuccess from '../screens/TopUpSuccess'
+import ForgotPassword from '../screens/ForgotPassword'
+import ForgotToken from '../screens/ForgotToken'
+import ForgotPin from '../screens/ForgotPin'
+import ForgotPinConfirmation from '../screens/ForgotPinConfirmation'
 
 const Stack = createStackNavigator()
 
@@ -87,6 +91,42 @@ class Navigation extends Component {
                   name='create-pin-confirmation'
                   options={{
                     title: 'VERIFIKASI PIN',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={ForgotPassword}
+                  name='forgot-password'
+                  options={{
+                    title: 'LUPA PIN',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={ForgotToken}
+                  name='forgot-token'
+                  options={{
+                    title: 'MASUKKAN TOKEN',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={ForgotPin}
+                  name='forgot-pin'
+                  options={{
+                    title: 'BUAT PIN BARU',
+                    headerTintColor: '#fff',
+                    headerStyle: {backgroundColor: '#583A8E'}
+                  }}
+                />
+                <Stack.Screen 
+                  component={ForgotPinConfirmation}
+                  name='forgot-pin-confirmation'
+                  options={{
+                    title: 'BUAT PIN BARU',
                     headerTintColor: '#fff',
                     headerStyle: {backgroundColor: '#583A8E'}
                   }}

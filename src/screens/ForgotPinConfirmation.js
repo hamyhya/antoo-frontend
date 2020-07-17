@@ -1,52 +1,55 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
+import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
+        TouchableOpacity, StatusBar, ActivityIndicator}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
 import {connect} from 'react-redux'
-import {loginUser} from '../redux/actions/auth'
+import {reset} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-class LoginPin extends Component {
+class ForgotPinConfirmation extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: this.props.route.params.email,
-      pin: ''
+      token: this.props.route.params.token,
+      pin: this.props.route.params.pin,
+      pin_conf: '',
+      error: this.props.auth.errorMsg
     }
   }
-  login  = () => {
+  verifPin  = () => {
     const dataSubmit = {
+      token: this.state.token,
       password: this.state.pin,
-      email: this.state.email
+      confirm_password: this.state.pin_conf
     }
-    const {pin} = this.state
-    if (pin == ""){
-      Alert.alert('Please Enter Your PIN')
-    } else {
-      this.props.loginUser(dataSubmit).then((response) => {
-        this.props.navigation.navigate('mainmenu')
-      }).catch(function (error) {
-        Alert.alert('Wrong Email or Password!')
+    const {error} = this.state
+    
+    if(dataSubmit.token !== '' && dataSubmit.pin !== '') {
+      this.props.reset(dataSubmit).then(() => {
+        this.props.navigation.navigate('login')
+        Alert.alert('Success', 'Now login to your account')
+      }).catch(function () {
+        Alert.alert('Ooops!', error)
       })
+    }else {
+      Alert.alert('Oops!', 'Please fill the form')
     }
-  }
-  forgot = () => {
-    this.props.navigation.navigate('forgot-password')
+    
   }
   render() {
     const {isLoading} = this.props.auth
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
         <View style={style.fill}>
           <View style={style.accent2}>
             <View style={style.header}>
-              <Text style={style.headerTitle}>Masukkan Security Code Anda</Text>
+              <Text style={style.headerTitle}>Masukkan PIN Sekali Lagi</Text>
             </View>
             <SmoothPinCodeInput
               codeLength={6}
@@ -57,18 +60,15 @@ class LoginPin extends Component {
               cellStyleFocused={{
                 borderColor: 'black',
               }}
-              value={this.state.pin}
-              onTextChange={pin => this.setState({ pin })}
+              value={this.state.pin_conf}
+              onTextChange={pin_conf => this.setState({ pin_conf })}
               />
-              <TouchableOpacity onPress={this.forgot}>
-                <Text style={style.forgetText}>LUPA SECURITY CODE?</Text>
-              </TouchableOpacity>
               <View style={style.btnTopUpWrapper}>
-                <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.verifPin}>
                   {isLoading ? (
-                    <ActivityIndicator size="large" color="white" />
+                    <ActivityIndicator size='large' color='white' />
                   ):(
-                    <Text style={style.btnTopUpText}>SIGNIN</Text>
+                    <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
                   )}
                 </TouchableOpacity>
               </View>
@@ -82,9 +82,9 @@ class LoginPin extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {loginUser}
+const mapDispatchToProps = {reset}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPin)
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPinConfirmation)
 
 const style = StyleSheet.create({
   fill: {
@@ -130,7 +130,7 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 250,
+    marginTop: 300,
     alignItems: "center",
     marginBottom: 150
   },

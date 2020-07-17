@@ -26,5 +26,17 @@ const logout = () => {
     payload: ''
   }
 }
+const forgot = (dataSubmit) => {
+  return {
+    type: 'REGISTER',
+    payload: http().post(`${ip}auth/forgot-password`, dataSubmit)
+  }
+}
+const reset = (dataSubmit) => {
+  return {
+    type: 'REGISTER',
+    payload: http().patch(`${ip}auth/reset-password`, dataSubmit)
+  }
+}
 
-export {loginUser, registerUser, verifyUser, logout}
+export {loginUser, registerUser, verifyUser, logout, forgot, reset}

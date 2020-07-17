@@ -29,10 +29,13 @@ class Login extends Component {
   loginUser = () => {
     const {email} = this.state
     if (email === ""){
-      Alert.alert('Please fill All Column')
+      Alert.alert('Ooops!', 'Please input email first :(')
     } else {
       this.props.navigation.navigate('login-pin', {email: this.state.email})
     }
+  }
+  otp = () => {
+    this.props.navigation.navigate('otp')
   }
   loading = () => {
     this.setState({isLoaded: true})
@@ -47,42 +50,53 @@ class Login extends Component {
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
-        <KeyboardAvoidingView behavior={'position'} style={loginStyle.fill}>
-          <Image source={bg} style={loginStyle.accent1}/>
-          <View style={loginStyle.accent1} />
-          <View style={loginStyle.accent2}>
-            <View style={loginStyle.titleWrapper}>
-              <Text style={loginStyle.title}>Antoo.</Text>
-            </View>
-              <View style={loginStyle.formWrapper}>
-                <View style={loginStyle.inputWrapper}>
-                  <View style={loginStyle.iconWrapper}>
-                    <Icon name='user' color='white' size={18}/>
-                  </View>
-                  <TextInput 
-                    onChangeText={(e) => {this.setState({email: e})}}
-                    style={loginStyle.textInput}
-                    placeholder='Email'
-                    placeholderTextColor='white'
-                  />
-                </View>
-                <TouchableOpacity style={loginStyle.btnSignin} onPress={this.loginUser}>
-                  <Text style={loginStyle.btnText}>SIGN IN</Text>
-                </TouchableOpacity>
-                <View style={loginStyle.divider}>
-                  <View style={loginStyle.line}/>
-                  <Text style={loginStyle.textDivider}>ATAU</Text>
-                  <View style={loginStyle.line}/>
-                </View>
-                <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
-                  <Text style={loginStyle.btnText}>JOIN NOW</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={loginStyle.btnHelp}>
-                  <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
-                </TouchableOpacity>
+        {isLoaded ? (
+          <KeyboardAvoidingView behavior={'position'} style={loginStyle.fill}>
+            <Image source={bg} style={loginStyle.accent1}/>
+            <View style={loginStyle.accent1} />
+            <View style={loginStyle.accent2}>
+              <View style={loginStyle.titleWrapper}>
+                <Text style={loginStyle.title}>Antoo.</Text>
               </View>
-            </View>
-        </KeyboardAvoidingView>
+                <View style={loginStyle.formWrapper}>
+                  <View style={loginStyle.inputWrapper}>
+                    <View style={loginStyle.iconWrapper}>
+                      <Icon name='user' color='white' size={18}/>
+                    </View>
+                    <TextInput 
+                      onChangeText={(e) => {this.setState({email: e})}}
+                      style={loginStyle.textInput}
+                      placeholder='Email'
+                      placeholderTextColor='white'
+                    />
+                  </View>
+                  <TouchableOpacity style={loginStyle.btnSignin} onPress={this.loginUser}>
+                    <Text style={loginStyle.btnText}>SIGN IN</Text>
+                  </TouchableOpacity>
+                  <View style={loginStyle.divider}>
+                    <View style={loginStyle.line}/>
+                    <Text style={loginStyle.textDivider}>ATAU</Text>
+                    <View style={loginStyle.line}/>
+                  </View>
+                  <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
+                    <Text style={loginStyle.btnText}>JOIN NOW</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={loginStyle.btnHelp}>
+                    <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+          </KeyboardAvoidingView>
+        ):(
+          <AnimatedSplash
+            translucent={true}
+            isLoaded={this.state.isLoaded}
+            logoImage={require("../assets/img/splash.png")}
+            backgroundColor={"#4C2B86"}
+            logoHeight={150}
+            logoWidht={150}
+          />
+        )}
       </>
     );
   }
