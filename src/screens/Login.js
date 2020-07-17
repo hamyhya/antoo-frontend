@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert}
+        TouchableOpacity, StatusBar, Alert, KeyboardAvoidingView}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import bg from '../assets/img/bg.png';
@@ -36,7 +36,7 @@ class Login extends Component {
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
-        <View style={loginStyle.fill}>
+        <KeyboardAvoidingView behavior={'position'} style={loginStyle.fill}>
           <Image source={bg} style={loginStyle.accent1}/>
           <View style={loginStyle.accent1} />
           <View style={loginStyle.accent2}>
@@ -71,7 +71,7 @@ class Login extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </>
     );
   }

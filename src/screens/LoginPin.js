@@ -29,6 +29,7 @@ class LoginPin extends Component {
       Alert.alert('Please Enter Your PIN')
     } else {
       this.props.loginUser(dataSubmit).then((response) => {
+        Alert.alert('Holaa!! Login Success Welcome :)')
         this.props.navigation.navigate('mainmenu')
       }).catch(function (error) {
         Alert.alert('Wrong Email or Password!')
