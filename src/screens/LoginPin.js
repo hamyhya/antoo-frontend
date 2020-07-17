@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ScrollView}
+        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
@@ -36,6 +36,7 @@ class LoginPin extends Component {
     }
   }
   render() {
+    const {isLoading} = this.props.auth
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -61,7 +62,11 @@ class LoginPin extends Component {
               </TouchableOpacity>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
-                  <Text style={style.btnTopUpText}>SIGNIN</Text>
+                  {isLoading ? (
+                    <ActivityIndicator size="large" color="white" />
+                  ):(
+                    <Text style={style.btnTopUpText}>SIGNIN</Text>
+                  )}
                 </TouchableOpacity>
               </View>
           </View>
@@ -71,9 +76,12 @@ class LoginPin extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 const mapDispatchToProps = {loginUser}
 
-export default connect(null, mapDispatchToProps)(LoginPin)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPin)
 
 const style = StyleSheet.create({
   fill: {

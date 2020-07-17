@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView}
+        TouchableOpacity, StatusBar, ActivityIndicator}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
@@ -32,6 +32,8 @@ class OTP extends Component {
     })
   }
   render() {
+    const {isLoading} = this.props.auth
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -57,7 +59,11 @@ class OTP extends Component {
               />
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.verify}>
-                  <Text style={style.btnTopUpText}>VERIFIKASI</Text>
+                  {isLoading ? (
+                    <ActivityIndicator size="large" color="white" />
+                  ):(
+                    <Text style={style.btnTopUpText}>VERIFIKASI</Text>
+                  )}
                 </TouchableOpacity>
               </View>
           </View>

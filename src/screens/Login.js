@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert}
+        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import bg from '../assets/img/bg.png';
+import AnimatedSplash from 'react-native-animated-splash-screen'
+
+import bg from '../assets/img/bg.png'
 
 import {connect} from 'react-redux'
 import {loginUser} from '../redux/actions/auth'
@@ -31,55 +33,75 @@ class Login extends Component {
       this.props.navigation.navigate('login-pin', {email: this.state.email})
     }
   }
+  loading = () => {
+    this.setState({isLoaded: true})
+  }
+  componentDidMount() {
+    setTimeout(this.loading, 3000)
+  }
 
   render() {
+    const {isLoaded} = this.state
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
-        <View style={loginStyle.fill}>
-          <Image source={bg} style={loginStyle.accent1}/>
-          <View style={loginStyle.accent1} />
-          <View style={loginStyle.accent2}>
-            <View style={loginStyle.titleWrapper}>
-              <Text style={loginStyle.title}>Antoo.</Text>
-            </View>
-            <View style={loginStyle.formWrapper}>
-              <View style={loginStyle.inputWrapper}>
-                <View style={loginStyle.iconWrapper}>
-                  <Icon name='user' color='white' size={18}/>
+        {isLoaded ? (
+          <View style={loginStyle.fill}>
+            <Image source={bg} style={loginStyle.accent1}/>
+            <View style={loginStyle.accent1} />
+            <View style={loginStyle.accent2}>
+              <View style={loginStyle.titleWrapper}>
+                <Text style={loginStyle.title}>Antoo.</Text>
+              </View>
+              <View style={loginStyle.formWrapper}>
+                <View style={loginStyle.inputWrapper}>
+                  <View style={loginStyle.iconWrapper}>
+                    <Icon name='user' color='white' size={18}/>
+                  </View>
+                  <TextInput 
+                    onChangeText={(e) => {this.setState({email: e})}}
+                    style={loginStyle.textInput}
+                    placeholder='Email'
+                    placeholderTextColor='white'
+                  />
                 </View>
-                <TextInput 
-                  onChangeText={(e) => {this.setState({email: e})}}
-                  style={loginStyle.textInput}
-                  placeholder='Email'
-                  placeholderTextColor='white'
-                />
+                <TouchableOpacity style={loginStyle.btnSignin} onPress={this.loginUser}>
+                  <Text style={loginStyle.btnText}>SIGN IN</Text>
+                </TouchableOpacity>
+                <View style={loginStyle.divider}>
+                  <View style={loginStyle.line}/>
+                  <Text style={loginStyle.textDivider}>ATAU</Text>
+                  <View style={loginStyle.line}/>
+                </View>
+                <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
+                  <Text style={loginStyle.btnText}>JOIN NOW</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={loginStyle.btnHelp}>
+                  <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={loginStyle.btnSignin} onPress={this.loginUser}>
-                <Text style={loginStyle.btnText}>SIGN IN</Text>
-              </TouchableOpacity>
-              <View style={loginStyle.divider}>
-                <View style={loginStyle.line}/>
-                <Text style={loginStyle.textDivider}>ATAU</Text>
-                <View style={loginStyle.line}/>
-              </View>
-              <TouchableOpacity style={loginStyle.btnJoin} onPress={this.register}>
-                <Text style={loginStyle.btnText}>JOIN NOW</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={loginStyle.btnHelp}>
-                <Text style={loginStyle.btnHelpText}>Butuh bantuan?</Text>
-              </TouchableOpacity>
             </View>
           </View>
-        </View>
+        ):(
+          <AnimatedSplash
+          translucent={true}
+          isLoaded={this.state.isLoaded}
+          logoImage={require("../assets/img/splash.png")}
+          backgroundColor={"#4C2B86"}
+          logoHeight={150}
+          logoWidht={150}/>
+        )}
       </>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 const mapDispatchToProps = {loginUser}
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
 const loginStyle = StyleSheet.create({
   fill: {
