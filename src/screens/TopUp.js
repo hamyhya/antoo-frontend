@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView, ActivityIndicator}
+        TouchableOpacity, StatusBar, ScrollView, ActivityIndicator, KeyboardAvoidingView}
         from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -43,7 +43,7 @@ class TopUp extends Component {
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
-        <View style={style.fill}>
+        <KeyboardAvoidingView behavior={'position'} style={style.fill}>
           <View style={style.accent2}>
             <ScrollView>
               <View style={style.header}>
@@ -116,7 +116,7 @@ class TopUp extends Component {
               </View>
             </ScrollView>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </>
     );
   }

@@ -52,7 +52,8 @@ class History extends Component {
                   {item.type === 'Transfer' ? (
                     <Text 
                       style={style.bookTitle}>{item.type} sebesar Rp.
-                      {item.amount.toString().replace('-','')} kepada &nbsp;
+                      {item.amount.toString().replace('-','')} 
+                      {item.amount.toString().search('-') === -1 ? ' dari' : ' kepada'} &nbsp;
                       {item.concerned}
                     </Text>
                   ):(

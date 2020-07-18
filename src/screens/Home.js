@@ -1,23 +1,22 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
+import {Text, View, Image, StyleSheet, Dimensions, ActivityIndicator, 
         TouchableOpacity, StatusBar, FlatList}
         from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5'
 
- import slide1 from '../assets/img/promo/slide.jpg'
-// import slide2 from '../assets/img/promo/2.jpg'
-// import slide3 from '../assets/img/promo/3.jpg'
+import {connect} from 'react-redux'
+import {getPromo} from '../redux/actions/promo'
+import {dataUser} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
-      password: '',
-      isLoaded: false
+      token: this.props.auth.token,
+      id: this.props.auth.dataLogin.id
     }
   }
   register = () => {
@@ -35,70 +34,92 @@ export default class Home extends Component {
   listrik = () => {
     this.props.navigation.navigate('listrik')
   }
+  promo = () => {
+    const {token} = this.state
+    this.props.getPromo(token)
+  }
+  getUser = () => {
+    const token = this.state.token
+    const id = this.state.id
+    this.props.dataUser(id, token)
+  }
+
+  componentDidMount() {
+    this.promo()
+    this.getUser()
+  }
   render() {
-    const data = [
-      {
-        id: 1,
-        title: 'Holaaa'
-      },
-      {
-        id: 2,
-        title: 'Holaaa'
-      },
-      {
-        id: 3,
-        title: 'Holaaa'
-      },
-    ]
+    const {dataPromo} = this.props.promo
+    const {balance} = this.props.auth
+    const loading = {
+      loadingPromo: this.props.promo.isLoading,
+      loadingBalance: this.props.auth.isLoading
+    }
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
         <View style={style.fill}>
           <View style={style.accent2}>
-            <View style={style.header}>
-              <View style={style.headerWrapper}>
-                <Text style={style.title}>Antoo.</Text>
-                <Text style={style.subTitle}>Your balances</Text>
-                <View style={style.balanceWrapper}>
-                  <Text style={style.balanceTextRp}>Rp</Text>
-                  <Text style={style.balanceText}>100.000</Text>
+            {loading.loadingPromo && loading.loadingBalance ? (
+              <View>
+                <ActivityIndicator size='large' color='#4C2B86' />
+              </View>
+            ):(
+              <>
+                <View style={style.header}>
+                  <View style={style.headerWrapper}>
+                    <Text style={style.title}>Antoo.</Text>
+                    <Text style={style.subTitle}>Your balances</Text>
+                    <View style={style.balanceWrapper}>
+                      <Text style={style.balanceTextRp}>Rp</Text>
+                      <Text style={style.balanceText}>{balance}</Text>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <View style={style.menuWrapper}>
-              <TouchableOpacity style={style.iconWrapper} onPress={this.topUp}>
-                <Icon name='plus-circle' size={20} color='#4C2B86' />
-                <Text style={style.iconText}>Top Up</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper} onPress={this.transfer}>
-                <Icon name='plus-circle' size={20} color='#4C2B86' />
-                <Text style={style.iconText}>Transfer</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={style.iconWrapper} onPress={this.listrik}>
-                <Icon name='plus-circle' size={20} color='#4C2B86' />
-                <Text style={style.iconText}>Listrik</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={style.promo}>
-              <View style={style.headerPromo}>
-                <Text style={style.headerPromoTitle}>Info dan Promo Spesial</Text>
-                <TouchableOpacity onPress={this.promo}>
-                  <Text style={style.headerPromoTitleBtn}>Lihat Semua</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={style.contentPromo}>
-                <FlatList
-                  style={style.flatlist}
-                  data={data}
-                  renderItem={({item}) =>
-                  <Promo
-                    title={item.title}
-                  />
-                }
-                keyExtractor={item => item.id.toString()}
-                />
-              </View>
-            </View>
+                <View style={style.menuWrapper}>
+                  <TouchableOpacity style={style.iconWrapper} onPress={this.topUp}>
+                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Text style={style.iconText}>Top Up</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={style.iconWrapper} onPress={this.transfer}>
+                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Text style={style.iconText}>Transfer</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={style.iconWrapper} onPress={this.listrik}>
+                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Text style={style.iconText}>Listrik</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={style.promo}>
+                  <View style={style.headerPromo}>
+                    <Text style={style.headerPromoTitle}>Info dan Promo Spesial</Text>
+                    <TouchableOpacity onPress={this.promo}>
+                      <Text style={style.headerPromoTitleBtn}>Lihat Semua</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={style.contentPromo}>
+                    <FlatList
+                      style={style.flatlist}
+                      data={dataPromo}
+                      renderItem={({item}) =>
+                      <TouchableOpacity
+                        onPress={() => {this.props.navigation.navigate('promo-detail',
+                        {title: item.title, image: item.image, description: item.description})}}
+                      >
+                        <Promo
+                          image={item.image}
+                        />
+                      </TouchableOpacity>
+                    }
+                    keyExtractor={item => item.id.toString()}
+                    refreshing={loading.loadingPromo}
+                    onRefresh={this.promo}
+                    />
+                  </View>
+                </View>
+              </>
+            )}
           </View>
         </View>
       </>
@@ -110,13 +131,21 @@ class Promo extends Component {
   render(){
     return(
       <View style={style.bannerWrapper}>
-        <TouchableOpacity style={style.bannerBtn}>
-          <Image source={slide1} style={style.bannerImg}/>
-        </TouchableOpacity>
+        <View style={style.bannerBtn}>
+          <Image source={{uri: this.props.image}} style={style.bannerImg}/>
+        </View>
       </View>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  promo: state.promo,
+})
+const mapDispatchToProps = {getPromo, dataUser}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
 
 const style = StyleSheet.create({
   fill: {
@@ -167,7 +196,7 @@ const style = StyleSheet.create({
   },
   balanceText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     marginLeft: 5
   },

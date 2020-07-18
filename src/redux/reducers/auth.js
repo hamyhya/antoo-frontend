@@ -5,6 +5,7 @@ const initialState = {
   errorMsg: '',
   token: null,
   dataLogin: [],
+  balance: 0
 }
 
 const auth = (state=initialState, action) => {
@@ -56,6 +57,29 @@ const auth = (state=initialState, action) => {
         isError: false,
       }
     }
+    case 'USERID_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    }
+    case 'USERID_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: action.payload.response.data.msg,
+      }
+    }
+    case 'USERID_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        balance: action.payload.data.data[0].balance,
+      }
+    }
     case 'LOGOUT': {
       return {
         ...state,
@@ -63,7 +87,8 @@ const auth = (state=initialState, action) => {
         isLogin: false,
         isError: false,
         token: null,
-        dataLogin: []
+        dataLogin: [],
+        dataUserId: []
       }
     }
     default: {

@@ -28,4 +28,5 @@ const deleteUser = (id) => {
   }
 }
 
+
 export {getUser, deleteUser, patchUser}

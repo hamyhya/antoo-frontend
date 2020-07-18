@@ -38,5 +38,11 @@ const reset = (dataSubmit) => {
     payload: http().patch(`${ip}auth/reset-password`, dataSubmit)
   }
 }
+const dataUser = (id, token) => {
+  return {
+    type: 'USERID',
+    payload: http(token).get(`${ip}user/${id}`)
+  }
+}
 
-export {loginUser, registerUser, verifyUser, logout, forgot, reset}
+export {loginUser, registerUser, verifyUser, logout, forgot, reset, dataUser}

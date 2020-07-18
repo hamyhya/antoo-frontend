@@ -2,46 +2,34 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, FlatList}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+
+import {connect} from 'react-redux'
+import {getPromo} from '../redux/actions/promo'
 
 import slide from '../assets/img/promo/slide.jpg'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
-export default class Promo extends Component {
+class Promo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      token: this.props.auth.token,
+      sort: 1
     }
   }
-  detail = () => {
-    this.props.navigation.navigate('promo-detail')
+  promo = () => {
+    const {token} = this.state
+    this.props.getPromo(token)
+  }
+  
+  componentDidMount() {
+    this.promo()
   }
   render() {
-    const data = [
-      {
-        id: 1,
-        title: 'Cashback Special Buat Kamu s.d 20% !'
-      },
-      {
-        id: 2,
-        title: 'Gara-gara CLBK, Hati Jadi Berbunga-bunga'
-      },
-      {
-        id: 3,
-        title: 'Voucher 100.000 Discount 25% Semua Menu'
-      },
-      {
-        id: 4,
-        title: 'Saatnya Kita Berbagi dalam Keterbatasan'
-      },
-      {
-        id: 5,
-        title: 'Pakai Maskernya, Sebar Kebaikannya'
-      },
-    ]
+    const {dataPromo, isLoading} = this.props.promo
+    const {sort} = this.state
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -57,18 +45,59 @@ export default class Promo extends Component {
                 <Text style={style.searchBtnText}>search</Text>
               </TouchableOpacity>
             </View>
+            <View style={style.sortWrapper}>
+              <TouchableOpacity style={style.btnPage}>
+                <Text style={style.btnSortText}>prev</Text>
+              </TouchableOpacity>
+              {sort === 1 ? (
+                <View style={style.btnSortWrapper}>
+                <TouchableOpacity style={style.btnNew}>
+                  <Text style={style.btnSortText}>new</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  style={style.btnOld}
+                  onPress={() => {this.setState({sort: 0})}}
+                >
+                  <Text style={style.btnSortText2}>old</Text>
+                </TouchableOpacity>
+              </View>
+              ):(
+                <View style={style.btnSortWrapper}>
+                  <TouchableOpacity 
+                    style={style.btnNew2}
+                    onPress={() => {this.setState({sort: 1})}}
+                  >
+                    <Text style={style.btnSortText2}>new</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={style.btnOld2}>
+                    <Text style={style.btnSortText}>old</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <TouchableOpacity style={style.btnPage}>
+                <Text style={style.btnSortText}>next</Text>
+              </TouchableOpacity>
+            </View>
             <View style={style.flatlistWrapper}>
               <FlatList
                   style={style.flatlist}
-                  data={data}
+                  data={dataPromo}
                   renderItem={({item}) =>
-                  <TouchableOpacity style={style.promoBtn} onPress={this.detail}>
+                  <TouchableOpacity 
+                    style={style.promoBtn}
+                    onPress={() => {this.props.navigation.navigate('promo-detail', 
+                    {title: item.title, image: item.image, description: item.description})}}
+                  >
                     <List
                       title={item.title}
+                      image={item.image}
+                      description={item.description}
                     />
                   </TouchableOpacity>
                 }
                 keyExtractor={item => item.id.toString()}
+                refreshing={isLoading}
+                onRefresh={this.promo}
                 />
             </View>
           </View>
@@ -78,12 +107,20 @@ export default class Promo extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  promo: state.promo,
+  auth: state.auth
+})
+const mapDispatchToProps = {getPromo}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Promo)
+
 class List extends Component {
   render(){
     return(
       <>
         <View style={style.imgWrapper}>
-          <Image source={slide} style={style.promoImg} />
+          <Image source={{uri: this.props.image}} style={style.promoImg} />
         </View>
         <Text style={style.promoTitle}>{this.props.title}</Text>
       </>
@@ -122,7 +159,7 @@ const style = StyleSheet.create({
   searchInput: {
     width: 200,
     height: 40,
-    backgroundColor: '#8771AE',
+    backgroundColor: '#4C2B86',
     borderRadius: 10,
     padding: 10,
     color: 'white'
@@ -130,7 +167,7 @@ const style = StyleSheet.create({
   searchBtn: {
     width: 70,
     height: 40,
-    backgroundColor: '#8771AE',
+    backgroundColor: '#4C2B86',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -138,6 +175,69 @@ const style = StyleSheet.create({
   },
   searchBtnText: {
     color: 'white'
+  },
+  sortWrapper: {
+    width: 274,
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    justifyContent: 'space-between'
+  },
+  btnSortWrapper: {
+    flexDirection: 'row',
+  },
+  btnPage: {
+    width: 50,
+    height: 25,
+    backgroundColor: '#4C2B86',
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnNew: {
+    width: 40,
+    height: 25,
+    backgroundColor: '#4C2B86',
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnNew2: {
+    width: 40,
+    height: 25,
+    borderWidth: 2,
+    borderColor: '#4C2B86',
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnOld: {
+    width: 40,
+    height: 25,
+    borderWidth: 2,
+    borderColor: '#4C2B86',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnOld2: {
+    width: 40,
+    height: 25,
+    backgroundColor: '#4C2B86',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  btnSortText: {
+    color: 'white'
+  },
+  btnSortText2: {
+    color: '#4C2B86'
   },
   flatlistWrapper: {
     marginTop: 30,
