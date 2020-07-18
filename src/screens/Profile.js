@@ -108,7 +108,11 @@ class Profile extends Component {
 
 const mapDispatchToProps = {logout}
 
-export default connect(null, mapDispatchToProps)(Profile)
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 const style = StyleSheet.create({
   fill: {

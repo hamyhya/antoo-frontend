@@ -12,12 +12,45 @@ import {
   CheckBox
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ImagePicker from 'react-native-image-picker'
+import {logout} from '../redux/actions/auth'
+import {patchUser} from '../redux/actions/users'
+import { connect } from 'react-redux'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 class EditProfile extends Component {
+  constructor(props){
+    super(props)
+    console.log('ini props', props)
+    this.state = {
+      token: this.props.auth.dataLogin.token,
+      name: '',
+      fullName: this.props.user.dataUser.fullName
+    }
+  }
+  state = {
+    photo: null,
+  }
+
+  handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        this.setState({ photo: response })
+      }
+    })
+  }
+
   render() {
+    const { photo } = this.state
+    const { token } = this.state
+    const { fullName } = this.state
+    console.log('initoken', token)
+    console.log('inifullname', fullName)
     return (
       <>
         <StatusBar backgroundColor='#583A8E' />
@@ -25,9 +58,14 @@ class EditProfile extends Component {
           <View style={style.content}>
             <View style={style.contentProfile}>
               <View style={style.imageWrapper}>
-                <Icon name='user' color='black' size={50} />
+                {photo && (
+                  <Image
+                    source={{ uri: photo.uri }}
+                    style={{ width: 300, height: 300 }}
+                  />
+                )}
               </View>
-              <TouchableOpacity style={style.btnEditImage}>
+              <TouchableOpacity onPress={this.handleChoosePhoto} style={style.btnEditImage}>
                 <Text style={style.btnEditText}>Perbarui Foto Profile</Text>
               </TouchableOpacity>
             </View>
@@ -37,7 +75,7 @@ class EditProfile extends Component {
               <Text style={style.textContent}>Nomor Ponsel</Text>
               <TextInput style={style.textInput} placeholder='0808080808' />
               <Text style={style.textContent}>Email</Text>
-              <TextInput style={style.textInput} placeholder='banisholih23@gmail.com'/>
+              <TextInput style={style.textInput} placeholder='banisholih23@gmail.com' />
             </View>
             <TouchableOpacity style={style.button}>
               <Text style={style.buttonText}>SIMPAN</Text>
@@ -49,7 +87,15 @@ class EditProfile extends Component {
   }
 }
 
-export default EditProfile
+const mapStateToProps = state => ({
+  auth: state.auth,
+  user: state.user
+})
+
+const mapDispatchToProps = { logout, patchUser }
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)
+
 
 const style = StyleSheet.create({
   fill: {
