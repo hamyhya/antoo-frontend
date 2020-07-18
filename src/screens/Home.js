@@ -4,6 +4,10 @@ import {Text, View, Image, StyleSheet, Dimensions, ActivityIndicator,
         from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5'
 
+import topupicon from '../assets/icon/top.png'
+import transfericon from '../assets/icon/transfer.png'
+import plnicon from '../assets/icon/thunder.png'
+
 import {connect} from 'react-redux'
 import {getPromo} from '../redux/actions/promo'
 import {dataUser} from '../redux/actions/auth'
@@ -16,7 +20,10 @@ class Home extends Component {
     super(props)
     this.state = {
       token: this.props.auth.token,
-      id: this.props.auth.dataLogin.id
+      id: this.props.auth.dataLogin.id,
+      sort: '',
+      search: '',
+      page: 1
     }
   }
   register = () => {
@@ -35,8 +42,8 @@ class Home extends Component {
     this.props.navigation.navigate('listrik')
   }
   promo = () => {
-    const {token} = this.state
-    this.props.getPromo(token)
+    const {token, search, sort, page} = this.state
+    this.props.getPromo(token, search, sort, page)
   }
   getUser = () => {
     const token = this.state.token
@@ -62,7 +69,7 @@ class Home extends Component {
         <View style={style.fill}>
           <View style={style.accent2}>
             {loading.loadingPromo && loading.loadingBalance ? (
-              <View>
+              <View style={style.loadingWrapper}>
                 <ActivityIndicator size='large' color='#4C2B86' />
               </View>
             ):(
@@ -79,24 +86,24 @@ class Home extends Component {
                 </View>
                 <View style={style.menuWrapper}>
                   <TouchableOpacity style={style.iconWrapper} onPress={this.topUp}>
-                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Image source={topupicon} style={style.iconImg} />
                     <Text style={style.iconText}>Top Up</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={style.iconWrapper} onPress={this.transfer}>
-                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Image source={transfericon} style={style.iconImg} />
                     <Text style={style.iconText}>Transfer</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={style.iconWrapper} onPress={this.listrik}>
-                    <Icon name='plus-circle' size={20} color='#4C2B86' />
+                    <Image source={plnicon} style={style.iconImg} />
                     <Text style={style.iconText}>Listrik</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={style.promo}>
                   <View style={style.headerPromo}>
                     <Text style={style.headerPromoTitle}>Info dan Promo Spesial</Text>
-                    <TouchableOpacity onPress={this.promo}>
+                    {/* <TouchableOpacity onPress={this.promo}>
                       <Text style={style.headerPromoTitleBtn}>Lihat Semua</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                   <View style={style.contentPromo}>
                     <FlatList
@@ -167,6 +174,10 @@ const style = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
   },
+  loadingWrapper: {
+    marginTop: 50,
+    justifyContent: 'center',
+  },
   header: {
     width: deviceWidth,
     height: 200,
@@ -222,6 +233,10 @@ const style = StyleSheet.create({
     marginRight: 25,
     marginRight: 25,
     alignItems: 'center'
+  },
+  iconImg: {
+    width: 20, 
+    height: 20
   },
   iconText: {
     color: '#4C2B86',

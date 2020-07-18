@@ -16,20 +16,39 @@ class Promo extends Component {
     super(props)
     this.state = {
       token: this.props.auth.token,
-      sort: 1
+      sort: '',
+      search: '',
+      page: 1
     }
   }
   promo = () => {
-    const {token} = this.state
-    this.props.getPromo(token)
+    const {token, search, sort, page} = this.state
+    this.props.getPromo(token, search, sort, page)
   }
-  
+  asc = () => {
+    this.setState({sort: 'asc'})
+    setTimeout(this.promo, 100)
+  }
+  desc = () => {
+    this.setState({sort: ''})
+    setTimeout(this.promo, 100)
+  }
+  next = () => {
+    const {page} = this.state
+    this.setState({page: page+1})
+    setTimeout(this.promo, 100)
+  }
+  prev = () => {
+    const {page} = this.state
+    this.setState({page: page-1})
+    setTimeout(this.promo, 100)
+  }
   componentDidMount() {
     this.promo()
   }
   render() {
     const {dataPromo, isLoading} = this.props.promo
-    const {sort} = this.state
+    const {sort, page, search} = this.state
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -40,23 +59,25 @@ class Promo extends Component {
                 placeholder='cari promo menarik...' 
                 style={style.searchInput}
                 placeholderTextColor='white'
+                value={search}
+                onChangeText={(e) => {this.setState({search: e})}}
               />
-              <TouchableOpacity style={style.searchBtn}>
+              <TouchableOpacity style={style.searchBtn} onPress={this.promo}>
                 <Text style={style.searchBtnText}>search</Text>
               </TouchableOpacity>
             </View>
             <View style={style.sortWrapper}>
-              <TouchableOpacity style={style.btnPage}>
+              <TouchableOpacity style={style.btnPage} onPress={this.prev}>
                 <Text style={style.btnSortText}>prev</Text>
               </TouchableOpacity>
-              {sort === 1 ? (
+              {sort === '' ? (
                 <View style={style.btnSortWrapper}>
-                <TouchableOpacity style={style.btnNew}>
+                <TouchableOpacity style={style.btnNew} onPress={this.desc}>
                   <Text style={style.btnSortText}>new</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={style.btnOld}
-                  onPress={() => {this.setState({sort: 0})}}
+                  onPress={this.asc}
                 >
                   <Text style={style.btnSortText2}>old</Text>
                 </TouchableOpacity>
@@ -65,16 +86,16 @@ class Promo extends Component {
                 <View style={style.btnSortWrapper}>
                   <TouchableOpacity 
                     style={style.btnNew2}
-                    onPress={() => {this.setState({sort: 1})}}
+                    onPress={this.desc}
                   >
                     <Text style={style.btnSortText2}>new</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={style.btnOld2}>
+                  <TouchableOpacity style={style.btnOld2} onPress={this.asc}>
                     <Text style={style.btnSortText}>old</Text>
                   </TouchableOpacity>
                 </View>
               )}
-              <TouchableOpacity style={style.btnPage}>
+              <TouchableOpacity style={style.btnPage} onPress={this.next}>
                 <Text style={style.btnSortText}>next</Text>
               </TouchableOpacity>
             </View>

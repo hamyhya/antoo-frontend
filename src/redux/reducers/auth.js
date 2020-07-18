@@ -5,7 +5,8 @@ const initialState = {
   errorMsg: '',
   token: null,
   dataLogin: [],
-  balance: 0
+  balance: 0,
+  userDetail: []
 }
 
 const auth = (state=initialState, action) => {
@@ -78,6 +79,7 @@ const auth = (state=initialState, action) => {
         isLoading: false,
         isError: false,
         balance: action.payload.data.data[0].balance,
+        userDetail: action.payload.data.data[0],
       }
     }
     case 'LOGOUT': {

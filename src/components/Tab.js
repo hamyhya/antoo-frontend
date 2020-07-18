@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Image} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import Home from '../screens/Home'
 import Profile from '../screens/Profile'
 import Promo from '../screens/Promo'
 import History from '../screens/History'
+
+import homeicon from '../assets/icon/home.png'
+import tagicon from '../assets/icon/tag.png'
+import historyicon from '../assets/icon/history.png'
+import usericon from '../assets/icon/user.png'
 
 const BottomTab = createBottomTabNavigator()
 
@@ -25,7 +29,7 @@ export default class Tab extends Component {
           options={{
             title: 'Home',
             tabBarIcon: ({color, size}) => (
-              <Icon name="home" color={color} size={size} />
+              <Image source={homeicon} style={{width: 15, height: 15}}/>
             ),
           }}
           component={Home}
@@ -35,7 +39,7 @@ export default class Tab extends Component {
           options={{
             title: 'Promo',
             tabBarIcon: ({color, size}) => (
-              <Icon name="history" color={color} size={size} />
+              <Image source={tagicon} style={{width: 15, height: 15}}/>
             ),
           }}
           component={Promo}
@@ -43,9 +47,9 @@ export default class Tab extends Component {
         />
         <BottomTab.Screen
           options={{
-            title: 'History',
+            title: 'Histori',
             tabBarIcon: ({color, size}) => (
-              <Icon name="shopping-cart" color={color} size={size} />
+              <Image source={historyicon} style={{width: 15, height: 15}}/>
             ),
           }}
           component={History}
@@ -55,7 +59,7 @@ export default class Tab extends Component {
           options={{
             title: 'Profile',
             tabBarIcon: ({color, size}) => (
-              <Icon name="user" solid color={color} size={size} />
+              <Image source={usericon} style={{width: 15, height: 15}}/>
             ),
           }}
           component={Profile}
