@@ -20,5 +20,11 @@ const pln = (dataSubmit, token) => {
     payload: http(token).post(`${ip}transaction/payment/pln`, dataSubmit)
   }
 }
+const history = (token) => {
+  return {
+    type: 'HISTORY',
+    payload: http(token).get(`${ip}transaction/history?limit=15`)
+  }
+}
 
-export {topup, transfer, pln}
+export {topup, transfer, pln, history}

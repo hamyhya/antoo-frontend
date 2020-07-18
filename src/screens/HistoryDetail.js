@@ -11,13 +11,17 @@ export default class HistoryDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      id: this.props.route.params.id,
+      amount: this.props.route.params.amount,
+      type: this.props.route.params.type,
+      date: this.props.route.params.date,
     }
   }
   home = () => {
     this.props.navigation.navigate('mainmenu')
   }
   render() {
+    const {id, type, amount, date} = this.state
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -25,18 +29,18 @@ export default class HistoryDetail extends Component {
           <View style={style.accent2}>
             <View style={style.header}>
               <Text style={style.headerTitle}>Histori Transaksi</Text>
-              <Text>2 Mei 2020, 06:38</Text>
+              <Text>{date.replace('T', '  ').slice(0, 20)}</Text>
             </View>
             <View style={style.contentWrapper}>
               <Text>Tipe Transaksi :</Text>
               <View style={style.plnIdWrapper}>
-                <Text style={style.plnId}>TRANSFER</Text>
+                <Text style={style.plnId}>{type}</Text>
               </View>
               <Text>Nominal :</Text>
-              <Text style={style.token}>Rp. 100.000</Text>
+              <Text style={style.token}>Rp. {amount.toString().replace('-', '')}</Text>
               <View style={style.infoWrapper}>
                 <Text>ID Transaksi :</Text>
-                <Text style={style.balance}>002191</Text>
+                <Text style={style.balance}>{id}</Text>
               </View>
             </View>
             <View style={style.btnTopUpWrapper}>
@@ -82,7 +86,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 25,
     letterSpacing: 3,
-    marginBottom: 5
+    marginBottom: 5,
   },
   contentWrapper: {
     width: deviceWidth,
@@ -103,6 +107,8 @@ const style = StyleSheet.create({
   },
   plnId: {
     fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 3
   },
   token: {
     fontWeight: 'bold',

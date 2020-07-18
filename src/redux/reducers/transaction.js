@@ -4,7 +4,8 @@ const initialState = {
   errorMsg: '',
   dataTopUp: [],
   dataTransfer: [],
-  dataPln: []
+  dataPln: [],
+  dataHistory: [],
 }
 
 const transaction = (state=initialState, action) => {
@@ -76,6 +77,38 @@ const transaction = (state=initialState, action) => {
         isLoading: false,
         isError: false,
         dataPln: action.payload.data.data
+      }
+    }
+    case 'HISTORY_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      }
+    }
+    case 'HISTORY_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: action.payload.response.data.msg,
+      }
+    }
+    case 'HISTORY_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        dataHistory: action.payload.data.data
+      }
+    }
+    case 'LOGOUT': {
+      return {
+        ...state,
+        dataTopUp: [],
+        dataTransfer: [],
+        dataPln: [],
+        dataHistory: [],
       }
     }
     default: {

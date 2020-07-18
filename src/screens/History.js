@@ -9,47 +9,65 @@ import {
   StatusBar
 } from 'react-native'
 
+import {connect} from 'react-redux'
+import {history} from '../redux/actions/transaction'
+
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 class History extends Component {
-  detail = () => {
-    this.props.navigation.navigate('history-detail')
+  constructor(props) {
+    super(props)
+    this.state = {
+      token: this.props.auth.token
+    }
+  }
+  history = () => {
+    const {token} = this.state
+
+    this.props.history(token)
+  }
+
+  componentDidMount() {
+    this.history()
   }
   render() {
 
-    const DATA = [
-      {
-        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "Top Up sebesar 10.000",
-      },
-      {
-        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-        title: "Transfer sebesar 50.000",
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "Bayar listrik sebesar 100.000",
-      },
-    ];
+    const {dataHistory, isLoading} = this.props.transaction
 
     return (
       <>
         <StatusBar backgroundColor='#583A8E' />
         <View style={style.fill}>
+          <Text style={style.historyTitle}>Histori Transaksi</Text>
           <FlatList
             style={style.content}
-            data={DATA}
+            data={dataHistory}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={this.detail}>
+              <TouchableOpacity 
+                onPress={() => {this.props.navigation.navigate('history-detail', 
+                {type: item.type, amount: item.amount, id: item.id, date: item.date})}}
+              >
                 <View style={style.transactionsList}>
-                  <Text style={style.bookTitle}>{item.title}</Text>
-                  {/* <Text style={style.bookTitle}>{item.description}</Text> */}
+                  {item.type === 'Transfer' ? (
+                    <Text 
+                      style={style.bookTitle}>{item.type} sebesar Rp.
+                      {item.amount.toString().replace('-','')} kepada &nbsp;
+                      {item.concerned}
+                    </Text>
+                  ):(
+                    <Text 
+                      style={style.bookTitle}>{item.type=== 'Payment' ? 'Payment PLN' : 'Topup'} sebesar Rp.
+                      {item.amount.toString().replace('-','')}
+                    </Text>
+                  )}
                 </View>
                 <View style={style.line} />
               </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
+            refreshing={isLoading}
+            onRefresh={this.history}
           />
         </View>
       </>
@@ -57,7 +75,13 @@ class History extends Component {
   }
 }
 
-export default History
+const mapStateToProps = state => ({
+  transaction: state.transaction,
+  auth: state.auth
+})
+const mapDispatchToProps = {history}
+
+export default connect(mapStateToProps, mapDispatchToProps)(History)
 
 const style = StyleSheet.create({
   fill: {
@@ -76,16 +100,18 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  bookTitle: {
-    color: 'black',
-    fontSize: 15,
-    fontWeight: 'bold'
+  historyTitle: {
+    color: '#73BD00',
+    fontSize: 25,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 30
   },
   line: {
     width: deviceWidth - 30,
     alignSelf: 'center',
     height: 1,
     width: 300,
-    backgroundColor: 'black'
+    backgroundColor: '#4C2B86'
   }
 })

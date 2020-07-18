@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
         TouchableOpacity, StatusBar, FlatList}
         from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/dist/FontAwesome5'
 
  import slide1 from '../assets/img/promo/slide.jpg'
 // import slide2 from '../assets/img/promo/2.jpg'
