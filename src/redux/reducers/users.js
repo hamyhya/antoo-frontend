@@ -7,31 +7,6 @@ const initialState = {
 
 const userReducers = (state = initialState, action) => {
   switch (action.type) {
-    case 'GETUSERID_PENDING': {
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-      };
-    }
-
-    case 'GETUSERID_REJECTED': {
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        errorMsg: action.payload.response.data.message,
-      };
-    }
-
-    case 'GETUSERID_FULFILLED': {
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-      };
-    }
-
     case 'GETUSER_PENDING': {
       return {
         ...state,

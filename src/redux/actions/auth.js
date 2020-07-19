@@ -38,6 +38,7 @@ const reset = (dataSubmit) => {
   };
 };
 const dataUser = (id, token) => {
+  console.log(id);
   return {
     type: 'USERID',
     payload: http(token).get(`${ip}user/${id}`),
