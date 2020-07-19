@@ -86,6 +86,7 @@ class EditProfile extends Component {
       .patchUser(formData, this.props.auth.dataLogin.token)
       .then((val) => {
         console.log(val);
+        this.setState({msg: ''});
       })
       .catch((val) => {
         console.log(val.response.data.msg);
@@ -106,44 +107,46 @@ class EditProfile extends Component {
         <StatusBar backgroundColor="#583A8E" />
         <View style={style.fill}>
           <View style={style.content}>
-            <View style={style.contentProfile}>
-              <View style={style.imageWrapper}>
-                {this.props.user.isLoading === false && (
-                  <Image
-                    resizeMode={'cover'}
-                    source={{
-                      uri:
-                        this.state.photo === null
-                          ? fileUri
-                          : this.state.photo.uri,
-                    }}
-                    style={{...{width: 80, height: 80, borderRadius: 40}}}
-                  />
-                )}
+            <View style={{...{flex: 1}}}>
+              <View style={style.contentProfile}>
+                <View style={style.imageWrapper}>
+                  {this.props.user.isLoading === false && (
+                    <Image
+                      resizeMode={'cover'}
+                      source={{
+                        uri:
+                          this.state.photo === null
+                            ? fileUri
+                            : this.state.photo.uri,
+                      }}
+                      style={{...{width: 80, height: 80, borderRadius: 40}}}
+                    />
+                  )}
+                </View>
+                <TouchableOpacity
+                  onPress={this.handleChoosePhoto}
+                  style={style.btnEditImage}>
+                  <Text style={style.btnEditText}>Perbarui Foto Profile</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={this.handleChoosePhoto}
-                style={style.btnEditImage}>
-                <Text style={style.btnEditText}>Perbarui Foto Profile</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={style.content2}>
-              <Text style={style.textContent}>Nama Lengkap</Text>
-              <TextInput
-                style={style.textInput}
-                onChangeText={(val) => this.setState({fullName: val})}
-                defaultValue={this.state.fullName}
-                placeholder="antoo"
-              />
-              <Text style={style.textContent}>Nomor Ponsel</Text>
-              <TextInput
-                style={style.textInput}
-                onChangeText={(val) => this.setState({phoneNumber: val})}
-                defaultValue={this.state.phoneNumber}
-                placeholder="0808080808"
-              />
-              <Text style={style.textContent}>Email</Text>
-              <TextInput style={style.textInput} defaultValue={email} />
+              <View style={style.content2}>
+                <Text style={style.textContent}>Nama Lengkap</Text>
+                <TextInput
+                  style={style.textInput}
+                  onChangeText={(val) => this.setState({fullName: val})}
+                  defaultValue={this.state.fullName}
+                  placeholder="antoo"
+                />
+                <Text style={style.textContent}>Nomor Ponsel</Text>
+                <TextInput
+                  style={style.textInput}
+                  onChangeText={(val) => this.setState({phoneNumber: val})}
+                  defaultValue={this.state.phoneNumber}
+                  placeholder="0808080808"
+                />
+                <Text style={style.textContent}>Email</Text>
+                <TextInput style={style.textInput} defaultValue={email} />
+              </View>
             </View>
             <TouchableOpacity style={style.button} onPress={this.submit}>
               {this.props.user.isLoading ? (
@@ -176,12 +179,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
 const style = StyleSheet.create({
   fill: {
     alignSelf: 'stretch',
-    height: deviceHeight,
+    flex: 1,
   },
   content: {
     alignSelf: 'stretch',
     margin: 20,
     marginTop: 20,
+    flex: 1,
   },
   contentProfile: {
     marginTop: 20,
@@ -239,7 +243,7 @@ const style = StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: deviceHeight-560,
+    marginTop: 20,
     backgroundColor: '#01B0B7',
     borderRadius: 25,
   },

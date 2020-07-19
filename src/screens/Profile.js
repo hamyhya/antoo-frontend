@@ -8,11 +8,14 @@ import {
   Dimensions,
   StatusBar,
   Image,
+  RefreshControl,
+  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import {connect} from 'react-redux';
 import {logout} from '../redux/actions/auth';
+import {getUserById} from '../redux/actions/users';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -43,6 +46,11 @@ class Profile extends Component {
       {cancelable: false},
     );
   };
+  state = {
+    full_name: '',
+    phone_number: '',
+    image: null,
+  };
   logout = () => {
     this.props.logout();
     this.props.navigation.navigate('login');
@@ -52,56 +60,95 @@ class Profile extends Component {
     this.props.navigation.navigate('editSecurity');
   };
 
+  componentDidMount() {
+    this.props
+      .getUserById(
+        this.props.auth.dataLogin.id,
+        this.props.auth.dataLogin.token,
+      )
+      .then((val) => {
+        this.setState({
+          full_name: val.value.data.data[0].full_name,
+          phone_number: val.value.data.data[0].phone_number,
+          image: val.value.data.data[0].image,
+        });
+      });
+  }
+
   render() {
-    const {full_name, phone_number, image} = this.props.auth.userDetail;
+    const {full_name, phone_number, image} = this.state;
     return (
       <>
         <StatusBar backgroundColor="#4C2B86" />
-        <View style={style.fill}>
+        <ScrollView
+          style={style.fill}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.auth.isLoading}
+              onRefresh={() => {
+                this.props
+                  .getUserById(
+                    this.props.auth.dataLogin.id,
+                    this.props.auth.dataLogin.token,
+                  )
+                  .then((val) => {
+                    this.setState({
+                      full_name: val.value.data.data[0].full_name,
+                      phone_number: val.value.data.data[0].phone_number,
+                      image: val.value.data.data[0].image,
+                    });
+                  });
+              }}
+            />
+          }>
           <View style={style.content}>
-            <View style={style.profile}>
-              <Text style={style.header}>Profil</Text>
-              <View style={style.contentProfile}>
-                <View style={style.imageWrapper}>
-                  <Image source={{uri: image}} style={style.image} />
+            <View style={{...{flex: 1}}}>
+              <View style={style.profile}>
+                <Text style={style.header}>Profil</Text>
+                <View style={style.contentProfile}>
+                  <View style={style.imageWrapper}>
+                    <Image source={{uri: image}} style={style.image} />
+                  </View>
+                  <View style={style.textProfile}>
+                    <Text style={style.name}>{full_name}</Text>
+                    <Text style={style.phone}>{phone_number}</Text>
+                  </View>
                 </View>
-                <View style={style.textProfile}>
-                  <Text style={style.name}>{full_name}</Text>
-                  <Text style={style.phone}>{phone_number}</Text>
+              </View>
+              <View style={style.contentBadge}>
+                <View style={style.account}>
+                  <Text style={style.textBadge}>Account</Text>
+                  <TouchableOpacity
+                    onPress={this.editProfile}
+                    style={style.list}>
+                    <Icon name="user-edit" size={22} />
+                    <Text style={style.title}>Ubah Profile</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
-            <View style={style.contentBadge}>
-              <View style={style.account}>
-                <Text style={style.textBadge}>Account</Text>
-                <TouchableOpacity onPress={this.editProfile} style={style.list}>
-                  <Icon name="user-edit" size={22} />
-                  <Text style={style.title}>Ubah Profile</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            {/* <View style={style.contentBadge}>
-              <View style={style.account}>
-                <Text style={style.textBadge}>Security</Text>
-                <TouchableOpacity onPress={this.editSecurityCode} style={style.list}>
-                  <Text style={style.title}>Ubah Security Code</Text>
-                </TouchableOpacity>
-              </View>
-            </View> */}
-            <View style={style.contentBadge}>
-              <View style={style.account}>
-                <Text style={style.textBadge}>About</Text>
-                <TouchableOpacity style={style.list}>
-                  <Icon Regular name="address-book" size={22} />
-                  <Text style={style.title}>Syarat Dan Ketentuan</Text>
-                </TouchableOpacity>
+              {/* <View style={style.contentBadge}>
+                <View style={style.account}>
+                  <Text style={style.textBadge}>Security</Text>
+                  <TouchableOpacity onPress={this.editSecurityCode} style={style.list}>
+                    <Text style={style.title}>Ubah Security Code</Text>
+                  </TouchableOpacity>
+                </View>
+              </View> */}
+              <View style={style.contentBadge}>
+                <View style={style.account}>
+                  <Text style={style.textBadge}>About</Text>
+                  <TouchableOpacity style={style.list}>
+                    <Icon Regular name="address-book" size={22} />
+                    <Text style={style.title}>Syarat Dan Ketentuan</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
             <TouchableOpacity onPress={this.logoutModal} style={style.button}>
               <Text style={style.buttonText}>Logout</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </>
     );
   }
@@ -110,20 +157,20 @@ class Profile extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {logout};
+const mapDispatchToProps = {logout, getUserById};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 
 const style = StyleSheet.create({
   fill: {
-    alignSelf: 'stretch',
-    height: deviceHeight,
     backgroundColor: '#ECE9F6',
+    flex: 1,
   },
   content: {
     alignSelf: 'stretch',
     margin: 20,
     marginTop: 70,
+    flex: 1,
   },
   header: {
     fontSize: 28,
@@ -200,7 +247,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: deviceHeight - 570,
+    marginVertical: 20,
     backgroundColor: '#4C2B86',
     borderRadius: 25,
   },
