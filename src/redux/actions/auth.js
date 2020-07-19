@@ -1,23 +1,23 @@
 import http from '../../services/http'
-const ip = 'http://api.antoo.smeatech.com/'
+import { API } from 'react-native-dotenv'
 
 
 const loginUser = (dataSubmit) => {
   return {
     type: 'LOGIN',
-    payload: http().post(`${ip}auth/login`, dataSubmit)
+    payload: http().post(`${API}auth/login`, dataSubmit)
   }
 }
 const registerUser = (dataSubmit) => {
   return {
     type: 'REGISTER',
-    payload: http().post(`${ip}auth/register`, dataSubmit)
+    payload: http().post(`${API}auth/register`, dataSubmit)
   }
 }
 const verifyUser = (otp) => {
   return {
     type: 'REGISTER',
-    payload: http().patch(`${ip}auth/activation`, otp)
+    payload: http().patch(`${API}auth/activation`, otp)
   }
 }
 const logout = () => {
@@ -29,19 +29,19 @@ const logout = () => {
 const forgot = (dataSubmit) => {
   return {
     type: 'REGISTER',
-    payload: http().post(`${ip}auth/forgot-password`, dataSubmit)
+    payload: http().post(`${API}auth/forgot-password`, dataSubmit)
   }
 }
 const reset = (dataSubmit) => {
   return {
     type: 'REGISTER',
-    payload: http().patch(`${ip}auth/reset-password`, dataSubmit)
+    payload: http().patch(`${API}auth/reset-password`, dataSubmit)
   }
 }
 const dataUser = (id, token) => {
   return {
     type: 'USERID',
-    payload: http(token).get(`${ip}user/${id}`)
+    payload: http(token).get(`${API}user/${id}`)
   }
 }
 

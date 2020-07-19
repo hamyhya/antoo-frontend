@@ -1,9 +1,9 @@
 import http from '../../services/http'
 import httpForm from '../../services/httpForm'
-const ip = 'http://api.antoo.smeatech.com/'
+import { API } from 'react-native-dotenv'
 
 const getUser = (param) => {
-  const url = `${ip}user?${param}`
+  const url = `${API}user?${param}`
   console.log(url)
   return {
     type: 'GETUSER',
@@ -12,7 +12,7 @@ const getUser = (param) => {
 }
 
 const patchUser = (dataUser, token) =>{
-  const url = `${ip}profile`
+  const url = `${API}profile`
   return {
     type: 'PATCHUSER',
     payload: httpForm(token).patch(url, dataUser)
@@ -20,7 +20,7 @@ const patchUser = (dataUser, token) =>{
 }
 
 const deleteUser = (id) => {
-  const url = `${ip}user/${id}`
+  const url = `${API}user/${id}`
   console.log(url)
   return {
     type: 'DELETEUSER',

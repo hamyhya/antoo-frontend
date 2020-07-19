@@ -3589,6 +3589,20 @@ babel-loader@8.1.0:
     pify "^4.0.1"
     schema-utils "^2.6.5"
 
+babel-plugin-dotenv-import@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-dotenv-import/-/babel-plugin-dotenv-import-2.1.0.tgz#5919df1a0d908e91b6a98d82ad12dc9d3a37ddec"
+  integrity sha512-ZzCqXbp8uFnhu1lO3nBaWt+rOYpVIXSrY8DEC/oaalL6DHtYP26Ye4TpGcXxNlBD1vzOHTPHo7eNHUIseCoiwA==
+  dependencies:
+    dotenv "^8.0.0"
+
+babel-plugin-dotenv@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-dotenv/-/babel-plugin-dotenv-0.1.1.tgz#9c8faea67a7c034fe7e94099187ab2e7573400bc"
+  integrity sha1-nI+upnp8A0/n6UCZGHqy51c0ALw=
+  dependencies:
+    dotenv "^2.0.0"
+
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz#84fda19c976ec5c6defef57f9427b3def66e17a3"
@@ -5617,6 +5631,11 @@ dot-prop@^5.2.0:
   integrity sha512-uEUyaDKoSQ1M4Oq8l45hSE26SnTxL6snNnqvK/VWx5wJhmff5z0FUVJDKDanor/6w3kzE3i7XZOk+7wC0EXr1A==
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-2.0.0.tgz#bd759c357aaa70365e01c96b7b0bec08a6e0d949"
+  integrity sha1-vXWcNXqqcDZeAclrewvsCKbg2Uk=
 
 dotenv@^8.0.0:
   version "8.2.0"
@@ -11920,12 +11939,12 @@ react-native-animated-splash-screen@^2.0.4:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-dotenv@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.2.0.tgz#d64289483c7956b97424b34164e56995e9919976"
-  integrity sha512-awcQNP7XBOJYR0RGAAgF/ia9yQeJgE023xUii/DiaTo/jDcnJEOXCPepnTmYsgk8Wtj6argVDBFAeAi3nUOfAw==
+react-native-dotenv@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#311551cb6a35a3dcfede648bded55c0e3ece579d"
+  integrity sha1-MRVRy2o1o9z+3mSL3tVcDj7OV50=
   dependencies:
-    dotenv "^8.0.0"
+    babel-plugin-dotenv "0.1.1"
 
 react-native-gesture-handler@^1.6.1:
   version "1.6.1"
