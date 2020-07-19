@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ScrollView}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, Alert, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, KeyboardAvoidingView
+}
+  from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
@@ -16,15 +18,15 @@ export default class ForgotPin extends Component {
       pin: ''
     }
   }
-  verifPin  = () => {
-    const {token, pin} = this.state
-    
-    if(token !== '' && pin !== '') {
-      this.props.navigation.navigate('forgot-pin-confirmation', {token: token, pin: pin})
-    }else {
+  verifPin = () => {
+    const { token, pin } = this.state
+
+    if (token !== '' && pin !== '') {
+      this.props.navigation.navigate('forgot-pin-confirmation', { token: token, pin: pin })
+    } else {
       Alert.alert('Oops!', 'Please fill the form')
     }
-    
+
   }
   render() {
     return (
@@ -46,12 +48,14 @@ export default class ForgotPin extends Component {
               }}
               value={this.state.pin}
               onTextChange={pin => this.setState({ pin })}
-              />
+            />
+            <KeyboardAvoidingView behavior={'position'}>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.verifPin}>
                   <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
                 </TouchableOpacity>
               </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -103,12 +107,12 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 300,
+    marginTop: deviceHeight - 380,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: '#01B0B7',

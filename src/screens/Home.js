@@ -182,8 +182,8 @@ const style = StyleSheet.create({
     width: deviceWidth,
     height: 200,
     backgroundColor: '#4C2B86',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   headerWrapper: {
     width: deviceWidth-50,
@@ -244,11 +244,11 @@ const style = StyleSheet.create({
   },
   flatlist: {
     width: deviceWidth,
-    height: 260
+    height: deviceHeight-435
   },
   promo: {
     width: deviceWidth,
-    height: 350,
+    height: deviceHeight,
     backgroundColor: 'white',
     marginTop: 30,
     paddingLeft: 20,

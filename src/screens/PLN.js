@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ActivityIndicator}
-        from 'react-native';
-        
-import {connect} from 'react-redux'
-import {pln} from '../redux/actions/transaction'
+import React, { Component } from 'react';
+import {
+  Text, View, Alert, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, ActivityIndicator, KeyboardAvoidingView
+}
+  from 'react-native';
+
+import { connect } from 'react-redux'
+import { pln } from '../redux/actions/transaction'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -20,19 +22,19 @@ class PLN extends Component {
     }
   }
   topup = () => {
-    const {token, error, customer} = this.state
+    const { token, error, customer } = this.state
     const dataSubmit = {
       amount: this.state.amount,
     }
 
     this.props.pln(dataSubmit, token).then(() => {
-      this.props.navigation.navigate('pln-success', {customer: customer})
+      this.props.navigation.navigate('pln-success', { customer: customer })
     }).catch(function () {
       Alert.alert('Ooops!', error)
     })
   }
   render() {
-    const {isLoading} = this.props.transaction
+    const { isLoading } = this.props.transaction
 
     return (
       <>
@@ -41,50 +43,52 @@ class PLN extends Component {
           <View style={style.accent2}>
             <View style={style.header}>
               <Text style={style.headerTitle}>Listrik Prabayar</Text>
-              <TextInput 
-                style={style.nominalInput} 
-                placeholder='Nomor Pelanggan PLN' 
-                onChangeText={(e) => {this.setState({customer: e})}}
+              <TextInput
+                style={style.nominalInput}
+                placeholder='Nomor Pelanggan PLN'
+                onChangeText={(e) => { this.setState({ customer: e }) }}
               />
             </View>
             <View style={style.nominal}>
               <Text style={style.headerTitle}>Pilih Nominal</Text>
               <View style={style.nominalWrapper}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '100000'})}}
+                  onPress={() => { this.setState({ amount: '100000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 100.000</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '200000'})}}
+                  onPress={() => { this.setState({ amount: '200000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 200.000</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '500000'})}}
+                  onPress={() => { this.setState({ amount: '500000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 500.000</Text>
                 </TouchableOpacity>
               </View>
-              <TextInput 
+              <TextInput
                 placeholder='Ketik Nominal'
-                style={style.nominalInput} 
+                style={style.nominalInput}
                 value={this.state.amount}
-                onChangeText={(e) => {this.setState({amount: e})}}
+                onChangeText={(e) => { this.setState({ amount: e }) }}
               />
             </View>
-            <View style={style.btnTopUpWrapper}>
-              <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
-                {isLoading ? (
-                  <ActivityIndicator size='large' color='white' />
-                ):(
-                  <Text style={style.btnTopUpText}>TOP UP</Text>
-                )}
-              </TouchableOpacity>
-            </View>
+            <KeyboardAvoidingView behavior={'position'}>
+              <View style={style.btnTopUpWrapper}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.topup}>
+                  {isLoading ? (
+                    <ActivityIndicator size='large' color='white' />
+                  ) : (
+                      <Text style={style.btnTopUpText}>TOP UP</Text>
+                    )}
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -96,7 +100,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   transaction: state.transaction
 })
-const mapDispatchToProps = {pln}
+const mapDispatchToProps = { pln }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PLN)
 
@@ -132,7 +136,7 @@ const style = StyleSheet.create({
     letterSpacing: 2
   },
   headerSubWrapper: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 80,
     marginTop: 10,
     borderWidth: 3,
@@ -171,7 +175,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold'
   },
   nominalInput: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 10,
     backgroundColor: '#F4F4F4',
@@ -180,12 +184,12 @@ const style = StyleSheet.create({
     fontWeight: 'bold'
   },
   btnTopUpWrapper: {
-    marginTop: 150,
+    marginTop: deviceHeight - 540,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 20,
     backgroundColor: '#01B0B7',

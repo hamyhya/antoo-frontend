@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
-import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ActivityIndicator}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, Alert, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, ActivityIndicator, KeyboardAvoidingView
+}
+  from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import {connect} from 'react-redux'
-import {transfer} from '../redux/actions/transaction'
+import { connect } from 'react-redux'
+import { transfer } from '../redux/actions/transaction'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -21,20 +23,20 @@ class Transfer extends Component {
     }
   }
   transfer = () => {
-    const {token, error} = this.state
+    const { token, error } = this.state
     const dataSubmit = {
       email_to: this.state.email,
       amount: this.state.amount,
     }
 
-    this.props.transfer(dataSubmit, token).then(() =>{
-      this.props.navigation.navigate('transfer-success', {email: dataSubmit.email_to})
+    this.props.transfer(dataSubmit, token).then(() => {
+      this.props.navigation.navigate('transfer-success', { email: dataSubmit.email_to })
     }).catch(function () {
-      Alert.alert('Ooops!', error)
+      Alert.alert('Failed! Please Check Your Balances', error)
     })
   }
   render() {
-    const {isLoading} = this.props.transaction
+    const { isLoading } = this.props.transaction
 
     return (
       <>
@@ -43,51 +45,53 @@ class Transfer extends Component {
           <View style={style.accent2}>
             <View style={style.header}>
               <Text style={style.headerTitle}>Transfer ke</Text>
-              <TextInput 
+              <TextInput
                 style={style.nominalInput}
                 placeholder='Email Antoo Temanmu'
                 value={this.state.email}
-                onChangeText={(e) => {this.setState({email: e})}}
+                onChangeText={(e) => { this.setState({ email: e }) }}
               />
             </View>
             <View style={style.nominal}>
               <Text style={style.headerTitle}>Pilih Nominal</Text>
               <View style={style.nominalWrapper}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '100000'})}}
+                  onPress={() => { this.setState({ amount: '100000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 100.000</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '200000'})}}
+                  onPress={() => { this.setState({ amount: '200000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 200.000</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={style.nominalBtn}
-                  onPress={() => {this.setState({amount: '500000'})}}
+                  onPress={() => { this.setState({ amount: '500000' }) }}
                 >
                   <Text style={style.nominalBtnText}>Rp 500.000</Text>
                 </TouchableOpacity>
               </View>
-              <TextInput 
+              <TextInput
                 placeholder='Ketik Nominal'
-                style={style.nominalInput} 
+                style={style.nominalInput}
                 value={this.state.amount}
-                onChangeText={(e) => {this.setState({amount: e})}}
+                onChangeText={(e) => { this.setState({ amount: e }) }}
               />
             </View>
-            <View style={style.btnTopUpWrapper}>
-              <TouchableOpacity style={style.btnTopUp} onPress={this.transfer}>
-                {isLoading ? (
-                  <ActivityIndicator size='large' color='white' />
-                ):(
-                  <Text style={style.btnTopUpText}>TRANSFER</Text>
-                )}
-              </TouchableOpacity>
-            </View>
+            <KeyboardAvoidingView behavior={'position'}>
+              <View style={style.btnTopUpWrapper}>
+                <TouchableOpacity style={style.btnTopUp} onPress={this.transfer}>
+                  {isLoading ? (
+                    <ActivityIndicator size='large' color='white' />
+                  ) : (
+                      <Text style={style.btnTopUpText}>TRANSFER</Text>
+                    )}
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -99,7 +103,7 @@ const mapStateToProps = state => ({
   auth: state.auth,
   transaction: state.transaction
 })
-const mapDispatchToProps = {transfer}
+const mapDispatchToProps = { transfer }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transfer)
 
@@ -135,7 +139,7 @@ const style = StyleSheet.create({
     letterSpacing: 2
   },
   headerSubWrapper: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 80,
     marginTop: 10,
     borderWidth: 3,
@@ -174,7 +178,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold'
   },
   nominalInput: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 10,
     backgroundColor: '#F4F4F4',
@@ -183,12 +187,12 @@ const style = StyleSheet.create({
     fontWeight: 'bold'
   },
   btnTopUpWrapper: {
-    marginTop: 150,
+    marginTop: deviceHeight - 540,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 20,
     backgroundColor: '#01B0B7',

@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
-import {Text, View, Alert, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, ActivityIndicator}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, Alert, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, ActivityIndicator, KeyboardAvoidingView
+}
+  from 'react-native';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
-import {connect} from 'react-redux'
-import {reset} from '../redux/actions/auth'
+import { connect } from 'react-redux'
+import { reset } from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -20,28 +22,28 @@ class ForgotPinConfirmation extends Component {
       error: this.props.auth.errorMsg
     }
   }
-  verifPin  = () => {
+  verifPin = () => {
     const dataSubmit = {
       token: this.state.token,
       password: this.state.pin,
       confirm_password: this.state.pin_conf
     }
-    const {error} = this.state
-    
-    if(dataSubmit.token !== '' && dataSubmit.pin !== '') {
+    const { error } = this.state
+
+    if (dataSubmit.token !== '' && dataSubmit.pin !== '') {
       this.props.reset(dataSubmit).then(() => {
         this.props.navigation.navigate('login')
         Alert.alert('Success', 'Now login to your account')
       }).catch(function () {
         Alert.alert('Ooops!', error)
       })
-    }else {
+    } else {
       Alert.alert('Oops!', 'Please fill the form')
     }
-    
+
   }
   render() {
-    const {isLoading} = this.props.auth
+    const { isLoading } = this.props.auth
 
     return (
       <>
@@ -62,16 +64,18 @@ class ForgotPinConfirmation extends Component {
               }}
               value={this.state.pin_conf}
               onTextChange={pin_conf => this.setState({ pin_conf })}
-              />
+            />
+            <KeyboardAvoidingView behavior={'position'}>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.verifPin}>
                   {isLoading ? (
                     <ActivityIndicator size='large' color='white' />
-                  ):(
-                    <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
-                  )}
+                  ) : (
+                      <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
+                    )}
                 </TouchableOpacity>
               </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -82,7 +86,7 @@ class ForgotPinConfirmation extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {reset}
+const mapDispatchToProps = { reset }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPinConfirmation)
 
@@ -130,12 +134,12 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 300,
+    marginTop: deviceHeight - 380,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: '#01B0B7',

@@ -102,7 +102,7 @@ const style = StyleSheet.create({
     padding: 20
   },
   btnTopUpWrapper: {
-    marginTop: 30,
+    marginTop: deviceHeight-680,
     alignItems: "center",
     marginBottom: 150
   },

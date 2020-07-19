@@ -9,10 +9,10 @@ import {
   StatusBar,
   Image
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import {connect} from 'react-redux'
-import {logout} from '../redux/actions/auth'
+import { connect } from 'react-redux'
+import { logout } from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -36,9 +36,10 @@ class Profile extends Component {
           // onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
-        { text: 'Logout', 
-          onPress: this.logout 
-      }
+        {
+          text: 'Logout',
+          onPress: this.logout
+        }
       ],
       { cancelable: false }
     )
@@ -53,7 +54,7 @@ class Profile extends Component {
   }
 
   render() {
-    const {full_name, phone_number, image} = this.props.auth.userDetail
+    const { full_name, phone_number, image } = this.props.auth.userDetail
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -63,7 +64,7 @@ class Profile extends Component {
               <Text style={style.header}>Profil</Text>
               <View style={style.contentProfile}>
                 <View style={style.imageWrapper}>
-                  <Image source={{uri: image}} style={style.image} />
+                  <Image source={{ uri: image }} style={style.image} />
                 </View>
                 <View style={style.textProfile}>
                   <Text style={style.name}>{full_name}</Text>
@@ -75,6 +76,7 @@ class Profile extends Component {
               <View style={style.account}>
                 <Text style={style.textBadge}>Account</Text>
                 <TouchableOpacity onPress={this.editProfile} style={style.list}>
+                  <Icon name="user-edit" size={22} />
                   <Text style={style.title}>Ubah Profile</Text>
                 </TouchableOpacity>
               </View>
@@ -91,6 +93,7 @@ class Profile extends Component {
               <View style={style.account}>
                 <Text style={style.textBadge}>About</Text>
                 <TouchableOpacity style={style.list}>
+                  <Icon Regular name="address-book" size={22} />
                   <Text style={style.title}>Syarat Dan Ketentuan</Text>
                 </TouchableOpacity>
               </View>
@@ -108,7 +111,7 @@ class Profile extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {logout}
+const mapDispatchToProps = { logout }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
@@ -117,7 +120,7 @@ const style = StyleSheet.create({
     alignSelf: 'stretch',
     height: deviceHeight,
     backgroundColor: '#ECE9F6'
-  },  
+  },
   content: {
     alignSelf: 'stretch',
     margin: 20,
@@ -191,15 +194,15 @@ const style = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
-    marginLeft: 20,
+    marginLeft: 15,
   },
   button: {
     alignSelf: 'stretch',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 120,
-    backgroundColor: '#d32f2f',
+    marginTop: deviceHeight - 570,
+    backgroundColor: '#4C2B86',
     borderRadius: 25,
   },
   buttonText: {

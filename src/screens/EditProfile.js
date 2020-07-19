@@ -46,6 +46,7 @@ class EditProfile extends Component {
   render() {
     const { photo } = this.state
     const { token } = this.state
+    const email = this.props.auth.dataLogin.email
     console.log('initoken', token)
     return (
       <>
@@ -71,7 +72,7 @@ class EditProfile extends Component {
               <Text style={style.textContent}>Nomor Ponsel</Text>
               <TextInput style={style.textInput} placeholder='0808080808' />
               <Text style={style.textContent}>Email</Text>
-              <TextInput style={style.textInput} placeholder='banisholih23@gmail.com' />
+              <TextInput style={style.textInput} defaultValue={email} />
             </View>
             <TouchableOpacity style={style.button}>
               <Text style={style.buttonText}>SIMPAN</Text>

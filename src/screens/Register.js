@@ -6,8 +6,11 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  CheckBox
+  Dimensions
 } from 'react-native'
+
+const deviceWidth = Dimensions.get('screen').width;
+const deviceHeight = Dimensions.get('screen').height;
 
 class Register extends Component {
   constructor(props){
@@ -79,7 +82,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 300,
+    marginTop: deviceHeight-370,
     backgroundColor: '#01B0B7',
     borderRadius: 25,
   },

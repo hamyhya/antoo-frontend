@@ -1,12 +1,14 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, Dimensions, 
-        TouchableOpacity, StatusBar, ActivityIndicator, Alert}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, StyleSheet, Dimensions,
+  TouchableOpacity, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView
+}
+  from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
-import {connect} from 'react-redux'
-import {registerUser} from '../redux/actions/auth'
+import { connect } from 'react-redux'
+import { registerUser } from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -17,28 +19,28 @@ class CreatePinConfirmation extends Component {
     this.state = {
       email: this.props.route.params.email,
       pin: this.props.route.params.pin,
-      conf_pin: '' 
+      conf_pin: ''
     }
   }
-  otp  = () => {
+  otp = () => {
     const dataSubmit = {
       email: this.state.email,
       password: this.state.pin,
       confirm_password: this.state.conf_pin
     }
 
-    if(dataSubmit.password === dataSubmit.confirm_password) {
-      this.props.registerUser(dataSubmit).then(() =>{
-        this.props.navigation.navigate('otp', {email: dataSubmit.email})
+    if (dataSubmit.password === dataSubmit.confirm_password) {
+      this.props.registerUser(dataSubmit).then(() => {
+        this.props.navigation.navigate('otp', { email: dataSubmit.email })
       }).catch(function () {
         Alert.alert('Register Failed')
       })
-    } else{
+    } else {
       Alert.Alert("PIN does'nt match")
     }
   }
   render() {
-    const {isLoading} = this.props.auth
+    const { isLoading } = this.props.auth
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -58,16 +60,18 @@ class CreatePinConfirmation extends Component {
               }}
               value={this.state.conf_pin}
               onTextChange={conf_pin => this.setState({ conf_pin })}
-              />
+            />
+            <KeyboardAvoidingView behavior={'position'}>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.otp}>
                   {isLoading ? (
                     <ActivityIndicator size="large" color="white" />
-                  ):(
-                    <Text style={style.btnTopUpText}>SIGN UP</Text>
-                  )}
+                  ) : (
+                      <Text style={style.btnTopUpText}>SIGN UP</Text>
+                    )}
                 </TouchableOpacity>
               </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -78,7 +82,7 @@ class CreatePinConfirmation extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {registerUser}
+const mapDispatchToProps = { registerUser }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePinConfirmation)
 
@@ -126,12 +130,12 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 300,
+    marginTop: deviceHeight - 380,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: '#01B0B7',

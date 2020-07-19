@@ -126,7 +126,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
   },
   btnTopUpWrapper: {
-    marginTop: 160,
+    marginTop: deviceHeight-540,
     alignItems: "center",
     marginBottom: 150
   },
