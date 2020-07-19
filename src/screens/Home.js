@@ -244,11 +244,11 @@ const style = StyleSheet.create({
   },
   flatlist: {
     width: deviceWidth,
-    height: 260
+    height: deviceHeight-435
   },
   promo: {
     width: deviceWidth,
-    height: 350,
+    height: deviceHeight,
     backgroundColor: 'white',
     marginTop: 30,
     paddingLeft: 20,
