@@ -6,7 +6,7 @@ const getUserById = (id, token) => {
   const url = `${API}user/${id}`;
   return {
     type: 'GETUSERID',
-    payload: http().get(url),
+    payload: http(token).get(url),
   };
 };
 
