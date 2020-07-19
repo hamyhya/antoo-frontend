@@ -156,7 +156,7 @@ const style = StyleSheet.create({
     height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 100,
+    marginTop: deviceHeight-560,
     backgroundColor: '#01B0B7',
     borderRadius: 25,
   },
