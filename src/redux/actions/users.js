@@ -2,6 +2,14 @@ import http from '../../services/http';
 import httpForm from '../../services/httpForm';
 const ip = 'http://52.87.153.181:8080/';
 
+const getUserById = (id, token) => {
+  const url = `${ip}user/${id}`;
+  return {
+    type: 'GETUSERID',
+    payload: http(token).get(url),
+  };
+};
+
 const getUser = (param) => {
   const url = `${ip}user?${param}`;
   console.log(url);
@@ -28,4 +36,4 @@ const deleteUser = (id) => {
   };
 };
 
-export {getUser, deleteUser, patchUser};
+export {getUser, deleteUser, patchUser, getUserById};

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -7,21 +7,20 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
-  Image
-} from 'react-native'
+  Image,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import { connect } from 'react-redux'
-import { logout } from '../redux/actions/auth'
+import {connect} from 'react-redux';
+import {logout} from '../redux/actions/auth';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 class Profile extends Component {
-
   editProfile = () => {
-    this.props.navigation.navigate('editProfile')
-  }
+    this.props.navigation.navigate('editProfile');
+  };
   logoutModal = () => {
     Alert.alert(
       'Are you sure?',
@@ -34,37 +33,37 @@ class Profile extends Component {
         {
           text: 'Cancel',
           // onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
+          style: 'cancel',
         },
         {
           text: 'Logout',
-          onPress: this.logout
-        }
+          onPress: this.logout,
+        },
       ],
-      { cancelable: false }
-    )
-  }
+      {cancelable: false},
+    );
+  };
   logout = () => {
-    this.props.logout()
-    this.props.navigation.navigate('login')
-  }
+    this.props.logout();
+    this.props.navigation.navigate('login');
+  };
 
   editSecurityCode = () => {
-    this.props.navigation.navigate('editSecurity')
-  }
+    this.props.navigation.navigate('editSecurity');
+  };
 
   render() {
-    const { full_name, phone_number, image } = this.props.auth.userDetail
+    const {full_name, phone_number, image} = this.props.auth.userDetail;
     return (
       <>
-        <StatusBar backgroundColor='#4C2B86' />
+        <StatusBar backgroundColor="#4C2B86" />
         <View style={style.fill}>
           <View style={style.content}>
             <View style={style.profile}>
               <Text style={style.header}>Profil</Text>
               <View style={style.contentProfile}>
                 <View style={style.imageWrapper}>
-                  <Image source={{ uri: image }} style={style.image} />
+                  <Image source={{uri: image}} style={style.image} />
                 </View>
                 <View style={style.textProfile}>
                   <Text style={style.name}>{full_name}</Text>
@@ -104,22 +103,22 @@ class Profile extends Component {
           </View>
         </View>
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
-const mapDispatchToProps = { logout }
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {logout};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 
 const style = StyleSheet.create({
   fill: {
     alignSelf: 'stretch',
     height: deviceHeight,
-    backgroundColor: '#ECE9F6'
+    backgroundColor: '#ECE9F6',
   },
   content: {
     alignSelf: 'stretch',
@@ -128,19 +127,19 @@ const style = StyleSheet.create({
   },
   header: {
     fontSize: 28,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   contentProfile: {
     marginTop: 20,
     // padding: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     width: 50,
     height: 50,
-    borderRadius: 50
+    borderRadius: 50,
   },
   imageWrapper: {
     width: 50,
@@ -150,7 +149,7 @@ const style = StyleSheet.create({
     borderRadius: 50,
     marginRight: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   textProfile: {
     flex: 1,
@@ -158,17 +157,17 @@ const style = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   },
   phone: {
     color: '#AAAAAA',
-    fontSize: 20
+    fontSize: 20,
   },
   contentBadge: {
     margin: -5,
     marginTop: 20,
     paddingLeft: 10,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     width: deviceWidth - 33,
     // height: deviceHeight,
     borderTopLeftRadius: 10,
@@ -182,13 +181,13 @@ const style = StyleSheet.create({
   },
   textBadge: {
     fontSize: 23,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   list: {
     alignSelf: 'stretch',
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   title: {
     flex: 1,
@@ -210,5 +209,4 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFF',
   },
-})
-
+});
