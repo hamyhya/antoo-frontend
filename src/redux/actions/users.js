@@ -7,26 +7,25 @@ const getUser = (param) => {
   console.log(url)
   return {
     type: 'GETUSER',
-    payload: http().get(url)
-  }
-}
+    payload: http().get(url),
+  };
+};
 
 const patchUser = (dataUser, token) =>{
   const url = `${API}profile`
   return {
     type: 'PATCHUSER',
-    payload: httpForm(token).patch(url, dataUser)
-  }
-}
+    payload: httpForm(token).patch(url, dataUser),
+  };
+};
 
 const deleteUser = (id) => {
   const url = `${API}user/${id}`
   console.log(url)
   return {
     type: 'DELETEUSER',
-    payload: http().delete(url)
-  }
-}
+    payload: http().delete(url),
+  };
+};
 
-
-export {getUser, deleteUser, patchUser}
+export {getUser, deleteUser, patchUser, getUserById};

@@ -27,4 +27,4 @@ const history = (token) => {
   }
 }
 
-export {topup, transfer, pln, history}
+export {topup, transfer, pln, history};

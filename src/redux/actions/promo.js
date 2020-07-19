@@ -9,4 +9,4 @@ const getPromo = (token, search, sort, page) => {
   }
 }
 
-export {getPromo}
+export {getPromo};

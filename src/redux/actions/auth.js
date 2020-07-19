@@ -23,9 +23,9 @@ const verifyUser = (otp) => {
 const logout = () => {
   return {
     type: 'LOGOUT',
-    payload: ''
-  }
-}
+    payload: '',
+  };
+};
 const forgot = (dataSubmit) => {
   return {
     type: 'REGISTER',
@@ -45,4 +45,4 @@ const dataUser = (id, token) => {
   }
 }
 
-export {loginUser, registerUser, verifyUser, logout, forgot, reset, dataUser}
+export {loginUser, registerUser, verifyUser, logout, forgot, reset, dataUser};
