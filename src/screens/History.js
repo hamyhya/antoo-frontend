@@ -65,7 +65,10 @@ class History extends Component {
                     </Text>
                   ) : (
                     <Text style={style.bookTitle}>
-                      {item.type === 'payment' ? 'Payment PLN' : 'Topup'}{' '}
+                      {item.type === 'payment'
+                        ? 'Payment PLN'
+                        : item.type.charAt(0).toUpperCase() +
+                          item.type.slice(1)}{' '}
                       sebesar Rp.
                       {item.amount.toString().replace('-', '')}
                     </Text>
