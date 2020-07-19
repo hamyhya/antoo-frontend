@@ -46,8 +46,14 @@ class EditProfile extends Component {
   render() {
     const { photo } = this.state
     const { token } = this.state
+<<<<<<< HEAD
     const email = this.props.auth.dataLogin.email
     console.log('initoken', token)
+=======
+    const { fullName } = this.state
+    console.log('initoken', token)
+    console.log('inifullname', fullName)
+>>>>>>> origin/stagging
     return (
       <>
         <StatusBar backgroundColor='#583A8E' />
@@ -72,7 +78,11 @@ class EditProfile extends Component {
               <Text style={style.textContent}>Nomor Ponsel</Text>
               <TextInput style={style.textInput} placeholder='0808080808' />
               <Text style={style.textContent}>Email</Text>
+<<<<<<< HEAD
               <TextInput style={style.textInput} defaultValue={email} />
+=======
+              <TextInput style={style.textInput} placeholder='banisholih23@gmail.com' />
+>>>>>>> origin/stagging
             </View>
             <TouchableOpacity style={style.button}>
               <Text style={style.buttonText}>SIMPAN</Text>
