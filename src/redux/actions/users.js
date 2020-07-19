@@ -4,6 +4,7 @@ import {API} from 'react-native-dotenv';
 
 const getUserById = (id, token) => {
   const url = `${API}user/${id}`;
+  console.log(url);
   return {
     type: 'GETUSERID',
     payload: http(token).get(url),
