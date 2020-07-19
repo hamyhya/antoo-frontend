@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react';
 import {
   View,
   Text,
@@ -6,60 +6,68 @@ import {
   TouchableOpacity,
   Dimensions,
   FlatList,
-  StatusBar
-} from 'react-native'
+  StatusBar,
+} from 'react-native';
 
-import {connect} from 'react-redux'
-import {history} from '../redux/actions/transaction'
+import {connect} from 'react-redux';
+import {history} from '../redux/actions/transaction';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
 
 class History extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      token: this.props.auth.token
-    }
+      token: this.props.auth.token,
+    };
   }
   history = () => {
-    const {token} = this.state
+    const {token} = this.state;
 
-    this.props.history(token)
-  }
+    this.props.history(token);
+  };
 
   componentDidMount() {
-    this.history()
+    this.history();
   }
   render() {
-
-    const {dataHistory, isLoading} = this.props.transaction
+    const {dataHistory, isLoading} = this.props.transaction;
 
     return (
       <>
-        <StatusBar backgroundColor='#583A8E' />
+        <StatusBar backgroundColor="#583A8E" />
         <View style={style.fill}>
           <Text style={style.historyTitle}>Histori Transaksi</Text>
           <FlatList
             style={style.content}
             data={dataHistory}
-            renderItem={({ item }) => (
-              <TouchableOpacity 
-                onPress={() => {this.props.navigation.navigate('history-detail', 
-                {type: item.type, amount: item.amount, id: item.id, date: item.date})}}
-              >
+            renderItem={({item}) => (
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate('history-detail', {
+                    type: item.type,
+                    amount: item.amount,
+                    id: item.id,
+                    date: item.date,
+                  });
+                }}>
                 <View style={style.transactionsList}>
                   {item.type === 'Transfer' ? (
-                    <Text 
-                      style={style.bookTitle}>{item.type} sebesar Rp.
-                      {item.amount.toString().replace('-','')} 
-                      {item.amount.toString().search('-') === -1 ? ' dari' : ' kepada'} &nbsp;
+                    <Text style={style.bookTitle}>
+                      {item.type} sebesar Rp.
+                      {item.amount.toString().replace('-', '')}
+                      {item.amount.toString().search('-') === -1
+                        ? ' dari'
+                        : ' kepada'}{' '}
+                      &nbsp;
                       {item.concerned}
                     </Text>
-                  ):(
-                    <Text 
-                      style={style.bookTitle}>{item.type=== 'Payment' ? 'Payment PLN' : 'Topup'} sebesar Rp.
-                      {item.amount.toString().replace('-','')}
+                  ) : (
+                    <Text style={style.bookTitle}>
+                      {item.type === 'payment' ? 'Payment PLN' : 'Topup'}{' '}
+                      sebesar Rp.
+                      {item.amount.toString().replace('-', '')}
                     </Text>
                   )}
                 </View>
@@ -72,23 +80,23 @@ class History extends Component {
           />
         </View>
       </>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   transaction: state.transaction,
-  auth: state.auth
-})
-const mapDispatchToProps = {history}
+  auth: state.auth,
+});
+const mapDispatchToProps = {history};
 
-export default connect(mapStateToProps, mapDispatchToProps)(History)
+export default connect(mapStateToProps, mapDispatchToProps)(History);
 
 const style = StyleSheet.create({
   fill: {
     alignSelf: 'stretch',
     height: deviceHeight,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   content: {
     alignSelf: 'stretch',
@@ -99,20 +107,20 @@ const style = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   historyTitle: {
     color: '#73BD00',
     fontSize: 25,
     fontWeight: 'bold',
     alignSelf: 'center',
-    marginTop: 30
+    marginTop: 30,
   },
   line: {
     width: deviceWidth - 30,
     alignSelf: 'center',
     height: 1,
     width: 300,
-    backgroundColor: '#4C2B86'
-  }
-})
+    backgroundColor: '#4C2B86',
+  },
+});
