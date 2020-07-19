@@ -1,12 +1,14 @@
-import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, Image, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, Alert, ActivityIndicator, KeyboardAvoidingView
+}
+  from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input'
 
-import {connect} from 'react-redux'
-import {loginUser} from '../redux/actions/auth'
+import { connect } from 'react-redux'
+import { loginUser } from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -19,13 +21,13 @@ class LoginPin extends Component {
       pin: ''
     }
   }
-  login  = () => {
+  login = () => {
     const dataSubmit = {
       password: this.state.pin,
       email: this.state.email
     }
-    const {pin} = this.state
-    if (pin == ""){
+    const { pin } = this.state
+    if (pin == "") {
       Alert.alert('Please Enter Your PIN')
     } else {
       this.props.loginUser(dataSubmit).then((response) => {
@@ -39,7 +41,7 @@ class LoginPin extends Component {
     this.props.navigation.navigate('forgot-password')
   }
   render() {
-    const {isLoading} = this.props.auth
+    const { isLoading } = this.props.auth
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -59,19 +61,21 @@ class LoginPin extends Component {
               }}
               value={this.state.pin}
               onTextChange={pin => this.setState({ pin })}
-              />
-              <TouchableOpacity onPress={this.forgot}>
-                <Text style={style.forgetText}>LUPA SECURITY CODE?</Text>
-              </TouchableOpacity>
+            />
+            <TouchableOpacity onPress={this.forgot}>
+              <Text style={style.forgetText}>LUPA SECURITY CODE?</Text>
+            </TouchableOpacity>
+            <KeyboardAvoidingView behavior={'position'}>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.login}>
                   {isLoading ? (
                     <ActivityIndicator size="large" color="white" />
-                  ):(
-                    <Text style={style.btnTopUpText}>SIGNIN</Text>
-                  )}
+                  ) : (
+                      <Text style={style.btnTopUpText}>SIGNIN</Text>
+                    )}
                 </TouchableOpacity>
               </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -82,7 +86,7 @@ class LoginPin extends Component {
 const mapStateToProps = state => ({
   auth: state.auth
 })
-const mapDispatchToProps = {loginUser}
+const mapDispatchToProps = { loginUser }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPin)
 
@@ -130,12 +134,12 @@ const style = StyleSheet.create({
     marginTop: 30
   },
   btnTopUpWrapper: {
-    marginTop: 250,
+    marginTop: deviceHeight - 430,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: '#01B0B7',

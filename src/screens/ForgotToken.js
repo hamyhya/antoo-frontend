@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, Dimensions, TextInput, 
-        TouchableOpacity, StatusBar, Alert, ActivityIndicator}
-        from 'react-native';
+import React, { Component } from 'react';
+import {
+  Text, View, Image, StyleSheet, Dimensions, TextInput,
+  TouchableOpacity, StatusBar, Alert, KeyboardAvoidingView
+}
+  from 'react-native';
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -14,11 +16,11 @@ class ForgotToken extends Component {
     }
   }
   forgotPin = () => {
-    const {token} = this.state
+    const { token } = this.state
 
-    if (token !== ''){
-      this.props.navigation.navigate('forgot-pin', {token: this.state.token})
-    }else {
+    if (token !== '') {
+      this.props.navigation.navigate('forgot-pin', { token: this.state.token })
+    } else {
       Alert.alert('Ooops!', 'Please enter valid token :(')
     }
   }
@@ -31,16 +33,18 @@ class ForgotToken extends Component {
             <View style={style.header}>
               <Text style={style.headerTitle}>Masukkan Token</Text>
             </View>
-            <TextInput 
-              placeholder='Token' 
+            <TextInput
+              placeholder='Token'
               style={style.email}
-              onChangeText={(e) => {this.setState({token: e})}}  
+              onChangeText={(e) => { this.setState({ token: e }) }}
             />
+            <KeyboardAvoidingView behavior={'position'}>
               <View style={style.btnTopUpWrapper}>
                 <TouchableOpacity style={style.btnTopUp} onPress={this.forgotPin}>
-                    <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
+                  <Text style={style.btnTopUpText}>BERIKUTNYA</Text>
                 </TouchableOpacity>
               </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </>
@@ -87,7 +91,7 @@ const style = StyleSheet.create({
     color: '#583A8E'
   },
   email: {
-    width: deviceWidth-70,
+    width: deviceWidth - 70,
     alignSelf: 'center',
     height: 50,
     borderRadius: 15,
@@ -95,12 +99,12 @@ const style = StyleSheet.create({
     backgroundColor: '#F4F4F4'
   },
   btnTopUpWrapper: {
-    marginTop: 280,
+    marginTop: deviceHeight - 380,
     alignItems: "center",
     marginBottom: 150
   },
   btnTopUp: {
-    width: deviceWidth-50,
+    width: deviceWidth - 50,
     height: 50,
     borderRadius: 25,
     backgroundColor: '#01B0B7',
