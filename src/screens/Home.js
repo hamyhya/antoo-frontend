@@ -182,8 +182,8 @@ const style = StyleSheet.create({
     width: deviceWidth,
     height: 200,
     backgroundColor: '#4C2B86',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   headerWrapper: {
     width: deviceWidth-50,

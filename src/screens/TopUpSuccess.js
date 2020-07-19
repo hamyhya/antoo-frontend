@@ -144,7 +144,7 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
   },
   btnTopUpWrapper: {
-    marginTop: 200,
+    marginTop: deviceHeight-480,
     alignItems: "center",
     marginBottom: 150
   },
