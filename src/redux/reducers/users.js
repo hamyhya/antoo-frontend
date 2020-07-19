@@ -3,16 +3,41 @@ const initialState = {
   isError: false,
   errorMsg: '',
   dataUser: [],
-}
+};
 
-const userReducers = (state=initialState, action) => {
-  switch(action.type){
+const userReducers = (state = initialState, action) => {
+  switch (action.type) {
+    case 'GETUSERID_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    }
+
+    case 'GETUSERID_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        errorMsg: action.payload.response.data.message,
+      };
+    }
+
+    case 'GETUSERID_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+    }
+
     case 'GETUSER_PENDING': {
       return {
         ...state,
         isLoading: true,
-        isError: false
-      }
+        isError: false,
+      };
     }
     case 'GETUSER_REJECTED': {
       return {
@@ -20,7 +45,7 @@ const userReducers = (state=initialState, action) => {
         isLoading: false,
         isError: true,
         errorMsg: action.payload.response.data.message,
-      }
+      };
     }
     case 'GETUSER_FULFILLED': {
       return {
@@ -28,64 +53,64 @@ const userReducers = (state=initialState, action) => {
         isLoading: false,
         isError: false,
         dataUser: action.payload.data.data,
-      }
+      };
     }
     case 'PATCHUSER_PENDING': {
       return {
         ...state,
         isLoading: true,
-        isError: false
-      }
+        isError: false,
+      };
     }
     case 'PATCHUSER_REJECTED': {
       return {
         ...state,
         isLoading: false,
-        isError: true
-      }
+        isError: true,
+      };
     }
     case 'PATCHUSER_FULFILLED': {
       return {
         ...state,
         isLoading: false,
-        isError: false
-      }
+        isError: false,
+      };
     }
     case 'DELETEUSER_PENDING': {
       return {
         ...state,
         isLoading: true,
-        isError: false
-      }
+        isError: false,
+      };
     }
     case 'DELETEUSER_REJECTED': {
       return {
         ...state,
         isLoading: false,
-        isError: true
-      }
+        isError: true,
+      };
     }
     case 'DELETEUSER_FULFILLED': {
       return {
         ...state,
         isLoading: false,
-        isError: false
-      }
+        isError: false,
+      };
     }
     case 'LOGOUT': {
       return {
         ...state,
         isLoading: false,
         isError: false,
-        dataUser: []
-      }
+        dataUser: [],
+      };
     }
     default: {
       return {
-        ...state
-      }
+        ...state,
+      };
     }
   }
-}
+};
 
-export default userReducers
+export default userReducers;
