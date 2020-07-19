@@ -5,6 +5,7 @@ import {Text, View, Image, StyleSheet, Dimensions, TextInput,
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import {connect} from 'react-redux'
+import {dataUser} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -17,10 +18,15 @@ class TopUpSuccess extends Component {
       id: this.props.transaction.dataTopUp.id,
       email: this.props.transaction.dataTopUp.email,
       balance: this.props.transaction.dataTopUp.balance,
-      card: this.props.route.params.card
+      card: this.props.route.params.card,
+      token: this.props.auth.token,
+      id_user: this.props.auth.dataLogin.id
     }
   }
   home = () => {
+    const token = this.state.token
+    const id = this.state.id_user
+    this.props.dataUser(id, token)
     this.props.navigation.navigate('mainmenu')
   }
   render() {
@@ -60,10 +66,12 @@ class TopUpSuccess extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   transaction: state.transaction
 })
+const mapDispatchToProps = {dataUser}
 
-export default connect(mapStateToProps)(TopUpSuccess)
+export default connect(mapStateToProps, mapDispatchToProps)(TopUpSuccess)
 
 const style = StyleSheet.create({
   fill: {

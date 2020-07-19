@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import AnimatedSplash from 'react-native-animated-splash-screen'
 
 import bg from '../assets/img/bg.png'
+import usericon from '../assets/icon/user.png'
 
 import {connect} from 'react-redux'
 import {loginUser} from '../redux/actions/auth'
@@ -61,7 +62,7 @@ class Login extends Component {
                 <View style={loginStyle.formWrapper}>
                   <View style={loginStyle.inputWrapper}>
                     <View style={loginStyle.iconWrapper}>
-                      <Icon name='user' color='white' size={18}/>
+                      <Image source={usericon} style={loginStyle.usericon} />
                     </View>
                     <TextInput 
                       onChangeText={(e) => {this.setState({email: e})}}
@@ -147,6 +148,10 @@ const loginStyle = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  usericon: {
+    width: 18,
+    height: 18
   },
   iconWrapper: {
     width: 35,

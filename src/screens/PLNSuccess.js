@@ -4,6 +4,7 @@ import {Text, View, Image, StyleSheet, Dimensions, TextInput,
         from 'react-native';
      
 import {connect} from 'react-redux'
+import {dataUser} from '../redux/actions/auth'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -12,9 +13,14 @@ class PLNSuccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      token: this.props.auth.token,
+      id_user: this.props.auth.dataLogin.id
     }
   }
   home = () => {
+    const token = this.state.token
+    const id = this.state.id_user
+    this.props.dataUser(id, token)
     this.props.navigation.navigate('mainmenu')
   }
   render() {
@@ -55,10 +61,12 @@ class PLNSuccess extends Component {
 }
 
 const mapStateToProps = state => ({
-  transaction: state.transaction
+  transaction: state.transaction,
+  auth: state.auth
 })
+const mapDispatchToProps = {dataUser}
 
-export default connect(mapStateToProps)(PLNSuccess)
+export default connect(mapStateToProps, mapDispatchToProps)(PLNSuccess)
 
 const style = StyleSheet.create({
   fill: {

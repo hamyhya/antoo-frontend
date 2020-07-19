@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
+  Image
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -52,20 +53,21 @@ class Profile extends Component {
   }
 
   render() {
+    const {full_name, phone_number, image} = this.props.auth.userDetail
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
         <View style={style.fill}>
           <View style={style.content}>
             <View style={style.profile}>
-              <Text style={style.header}>Profile</Text>
+              <Text style={style.header}>Profil</Text>
               <View style={style.contentProfile}>
                 <View style={style.imageWrapper}>
-                  <Icon name='user' color='black' size={18} />
+                  <Image source={{uri: image}} style={style.image} />
                 </View>
                 <View style={style.textProfile}>
-                  <Text style={style.name}>Antoo Profile</Text>
-                  <Text style={style.phone}>0821-1272-0993</Text>
+                  <Text style={style.name}>{full_name}</Text>
+                  <Text style={style.phone}>{phone_number}</Text>
                 </View>
               </View>
             </View>
@@ -73,25 +75,22 @@ class Profile extends Component {
               <View style={style.account}>
                 <Text style={style.textBadge}>Account</Text>
                 <TouchableOpacity onPress={this.editProfile} style={style.list}>
-                  <Icon name='user' color='black' size={18}></Icon>
                   <Text style={style.title}>Ubah Profile</Text>
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={style.contentBadge}>
+            {/* <View style={style.contentBadge}>
               <View style={style.account}>
                 <Text style={style.textBadge}>Security</Text>
                 <TouchableOpacity onPress={this.editSecurityCode} style={style.list}>
-                  <Icon name='user' color='black' size={18} />
                   <Text style={style.title}>Ubah Security Code</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
             <View style={style.contentBadge}>
               <View style={style.account}>
                 <Text style={style.textBadge}>About</Text>
                 <TouchableOpacity style={style.list}>
-                  <Icon name='user' color='black' size={18}></Icon>
                   <Text style={style.title}>Syarat Dan Ketentuan</Text>
                 </TouchableOpacity>
               </View>
@@ -106,9 +105,12 @@ class Profile extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 const mapDispatchToProps = {logout}
 
-export default connect(null, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 const style = StyleSheet.create({
   fill: {
@@ -130,10 +132,16 @@ const style = StyleSheet.create({
     // padding: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 50
   },
   imageWrapper: {
-    width: 35,
-    height: 35,
+    width: 50,
+    height: 50,
     borderWidth: 2,
     borderColor: 'white',
     borderRadius: 50,
@@ -146,10 +154,12 @@ const style = StyleSheet.create({
     fontSize: 14,
   },
   name: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: 20
   },
   phone: {
-    color: '#AAAAAA'
+    color: '#AAAAAA',
+    fontSize: 20
   },
   contentBadge: {
     margin: -5,
@@ -188,7 +198,7 @@ const style = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 120,
     backgroundColor: '#d32f2f',
     borderRadius: 25,
   },

@@ -72,6 +72,14 @@ const userReducers = (state=initialState, action) => {
         isError: false
       }
     }
+    case 'LOGOUT': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        dataUser: []
+      }
+    }
     default: {
       return {
         ...state

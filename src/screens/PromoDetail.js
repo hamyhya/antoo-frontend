@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet, Dimensions,
         TouchableOpacity, StatusBar, ScrollView}
-        from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
-
-import slide from '../assets/img/promo/slide.jpg'
+        from 'react-native'
 
 const deviceWidth = Dimensions.get('screen').width;
 const deviceHeight = Dimensions.get('screen').height;
@@ -13,13 +10,17 @@ export default class PromoDetail extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      nominal: ''
+      title: this.props.route.params.title,
+      image: this.props.route.params.image,
+      description: this.props.route.params.description,
     }
   }
   home = () => {
     this.props.navigation.navigate('mainmenu')
   }
   render() {
+    const {title, image, description} = this.state
+
     return (
       <>
         <StatusBar backgroundColor='#4C2B86' />
@@ -27,23 +28,13 @@ export default class PromoDetail extends Component {
           <View style={style.accent2}>
             <View style={style.header}>
               <View style={style.imgWrapper}>
-                <Image source={slide} style={style.promoImg} />
+                <Image source={{uri: image}} style={style.promoImg} />
               </View>
-              <Text style={style.headerTitle} >Cashback Special Buat Kamu s.d 20% !</Text>
+              <Text style={style.headerTitle} >{title}</Text>
             </View>
             <View style={style.contentWrapper}>
               <ScrollView>
-                <Text>
-                Siapa sih yang nggak pengen hatinya jadi berbunga-bunga? Semua pasti pengen kan? 
-                Nah, pas banget OVO balik lagi dengan promo CLBK yang bisa bikin hati kamu berbunga-bunga!
-                
-                Eits, bukan CLBK sembarangan nih! CLBK yang ini artinya Cashback Lagi Buat Kamu! 
-                Jadi kamu bisa dapetin Cashback 20% buat ajak temen, gebetan, atau mantan buat makan 
-                di merchant partner OVO yang oke banget! Pokoknya mau makan sama siapa aja, mau makan di tempat,
-                atau delivery order semuanya dijamin lebih enak kalo pake Cashback 20% di CLBK (Cashback Lagi Buat Kamu)
-                OVO!
-                
-                </Text>
+                <Text>{description}</Text>
               </ScrollView>
             </View>
             <View style={style.btnTopUpWrapper}>
