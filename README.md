@@ -1,4 +1,4 @@
-<h1 align='center'>Antoo - e-Wallet for Digital Lifestyle</h1>
+<h1 align='center'>Antoo | e-Wallet for Digital Lifestyle</h1>
 
 <br>
 
